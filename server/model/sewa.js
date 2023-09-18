@@ -11,7 +11,7 @@ const sewaSchema = new mongoose.Schema({
   },
   tanggal_sewa: {
     type: Date,
-    default: new Date(),
+    default: () => Date.now(),
     required: true,
   },
   tanggal_kembali: {
