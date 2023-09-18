@@ -19,7 +19,7 @@ const customerSchema = new mongoose.Schema({
   },
   sewa: {
     type: String,
-    enum: ["menyewa", "pending", "tidak menyewa"],
+    enum: ["MENYEWA", "PENDING", "TIDAK_MENYEWA"],
     required: true,
   },
 });

@@ -21,6 +21,9 @@ const vehicleSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  img_url: {
+    type: String,
+  },
 });
 
 const kendaraanDB = mongoose.model("kendaraanDB", vehicleSchema);
