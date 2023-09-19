@@ -22,8 +22,8 @@ const sewaSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["SEDANG_DISEWA", "PENDING", "CANCELLED"],
-    default: "PENDING",
+    enum: ["DISEWA", "KONFIRMASI", "KEMBALI", "DITOLAK"],
+    default: "KONFIRMASI",
     required: true,
   },
 });

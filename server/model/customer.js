@@ -19,7 +19,8 @@ const customerSchema = new mongoose.Schema({
   },
   sewa: {
     type: String,
-    enum: ["MENYEWA", "PENDING", "TIDAK_MENYEWA"],
+    enum: ["MENYEWA", "TIDAK_MENYEWA", "MENGAJUKAN"],
+    default: "TIDAK_MENYEWA",
     required: true,
   },
 });
