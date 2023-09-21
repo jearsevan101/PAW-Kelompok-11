@@ -7,6 +7,7 @@ const sewaSchema = new mongoose.Schema({
   },
   customer_id: {
     type: mongoose.SchemaTypes.ObjectId,
+    ref: "customer",
     required: true,
   },
   tanggal_sewa: {
@@ -28,6 +29,6 @@ const sewaSchema = new mongoose.Schema({
   },
 });
 
-const sewaDB = mongoose.model("customerDB", sewaSchema);
+const sewaDB = mongoose.model("sewa", sewaSchema);
 
 module.exports = sewaDB;

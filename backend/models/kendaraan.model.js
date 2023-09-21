@@ -26,6 +26,6 @@ const vehicleSchema = new mongoose.Schema({
   },
 });
 
-const kendaraanDB = mongoose.model("kendaraanDB", vehicleSchema);
+const kendaraanDB = mongoose.model("kendaraan", vehicleSchema);
 
 module.exports = kendaraanDB;

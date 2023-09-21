@@ -1,9 +1,9 @@
 const express = require("express");
+const { createKendaraan } = require("../controllers/kendaraan.controller");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ test: "test" });
-});
+// POST API
+router.post("/", createKendaraan);
 
 module.exports = router;
