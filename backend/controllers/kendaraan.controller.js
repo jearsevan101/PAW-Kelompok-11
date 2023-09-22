@@ -72,10 +72,24 @@ const updateKendaraanById = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+// Delete kendaraan
+const deleteKendaraan = async (req, res)=>{
+  const { id } = req.params
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(404).json({error: 'no such kendaraan'})
+  }
+  const kendaraan = await Kendaraan.findByIdAndDelete(id)
+
+  if(!kendaraan){
+    return res.status(400).json({error: 'no such kendaraan'})
+  }
+  res.status(200).json(kendaraan)
+}
 
 module.exports = {
   createKendaraan,
   readAllKendaraan,
   readKendaraanById,
   updateKendaraanById,
+  deleteKendaraan,
 };
