@@ -13,7 +13,7 @@ Tugas Pengembangan Aplikasi Web
 Go to the server project directory
 
 ```bash
-  cd server
+  cd backend
 ```
 
 Install dependencies
