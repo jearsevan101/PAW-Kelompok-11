@@ -20,9 +20,33 @@ const createKendaraan = async (req, res) => {
   }
 };
 
+// Read all kendaraan
+const readAllKendaraan = async (req, res) => {
+  try {
+    const kendaraanList = await Kendaraan.find();
+    res.status(200).json(kendaraanList);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Read a specific kendaraan by ID
+const readKendaraanById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const kendaraan = await Kendaraan.findById(id);
+    if (!kendaraan) {
+      return res.status(404).json({ error: "Kendaraan tidak ditemukan" });
+    }
+    res.status(200).json(kendaraan);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 // Update kendaraan
-const updateKendaraan = async (req, res) => {
-  const { id } = req.params; 
+const updateKendaraanById = async (req, res) => {
+  const { id } = req.params;
   const { nama, deskripsi, lokasi, harga, available, img_url } = req.body;
 
   try {
@@ -36,7 +60,7 @@ const updateKendaraan = async (req, res) => {
         available,
         img_url,
       },
-      { new: true } 
+      { new: true }
     );
 
     if (!kendaraan) {
@@ -49,7 +73,9 @@ const updateKendaraan = async (req, res) => {
   }
 };
 
-
 module.exports = {
-  createKendaraan, updateKendaraan
+  createKendaraan,
+  readAllKendaraan,
+  readKendaraanById,
+  updateKendaraanById,
 };
