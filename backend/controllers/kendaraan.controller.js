@@ -1,5 +1,5 @@
 const Kendaraan = require("../models/kendaraan.model");
-
+const mongoose = require('mongoose');
 // create new kendaraan
 const createKendaraan = async (req, res) => {
   const { nama, deskripsi, lokasi, harga, available, img_url } = req.body;
