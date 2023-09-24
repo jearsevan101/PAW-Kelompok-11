@@ -24,6 +24,34 @@ const createCustomer = async (req, res) => {
   };
 
 
+const updateCustomerById = async (req, res) => {
+  const { id } = req.params;
+  const { username, password, nama, umur, sewa } = req.body;
+
+  try {
+    const updatedCustomer = await Customer.findByIdAndUpdate(
+      id,
+      {
+        username,
+        password,
+        nama,
+        umur,
+        sewa,
+      },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res.status(404).json({ error: "Pelanggan tidak ditemukan" });
+    }
+
+    res.status(200).json(updatedCustomer);
+  } catch (err) {
+    res.status(500).json({ error: "Terjadi kesalahan saat memperbarui data pelanggan" });
+  }
+};
+
 module.exports = {
-    createCustomer,
-  };
+  createCustomer,
+  updateCustomerById,
+};

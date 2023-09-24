@@ -24,7 +24,35 @@ const createSewa = async (req, res) => {
     }
   };
 
+// Update sewa by ID
+const updateSewaById = async (req, res) => {
+  const { id } = req.params;
+  const { kendaraan_id, customer_id, tanggal_sewa, tanggal_kembali, total_harga, status } = req.body;
+
+  try {
+    const updatedSewa = await Sewa.findByIdAndUpdate(
+      id,
+      {
+        kendaraan_id,
+        customer_id,
+        tanggal_sewa,
+        tanggal_kembali,
+        total_harga,
+        status,
+      },
+      { new: true }
+    );
+
+    if (!updatedSewa) {
+      return res.status(404).json({ error: "Sewa tidak ditemukan" });
+    }
+    res.status(200).json(updatedSewa);
+  } catch (err) {
+    res.status(500).json({ error: "Terjadi kesalahan saat memperbarui data sewa" });
+  }
+};
 
 module.exports = {
-    createSewa,
-  };
+  createSewa,
+  updateSewaById,
+};
