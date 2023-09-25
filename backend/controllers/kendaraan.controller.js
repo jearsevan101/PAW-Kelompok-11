@@ -1,5 +1,5 @@
 const Kendaraan = require("../models/kendaraan.model");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 // create new kendaraan
 const createKendaraan = async (req, res) => {
   const { nama, deskripsi, lokasi, harga, available, img_url } = req.body;
@@ -74,17 +74,17 @@ const updateKendaraanById = async (req, res) => {
 };
 // Delete kendaraan
 const deleteKendaraan = async (req, res)=>{
-  const { id } = req.params
+  const { id } = req.params;
   if(!mongoose.Types.ObjectId.isValid(id)){
-    return res.status(404).json({error: 'no such kendaraan'})
+    return res.status(404).json({error: "no such kendaraan"});
   }
-  const kendaraan = await Kendaraan.findByIdAndDelete(id)
+  const kendaraan = await Kendaraan.findByIdAndDelete(id);
 
   if(!kendaraan){
-    return res.status(400).json({error: 'no such kendaraan'})
+    return res.status(400).json({error: "no such kendaraan"});
   }
-  res.status(200).json(kendaraan)
-}
+  res.status(200).json(kendaraan);
+};
 
 module.exports = {
   createKendaraan,
