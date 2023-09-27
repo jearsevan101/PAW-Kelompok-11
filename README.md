@@ -105,9 +105,9 @@ https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
     PUT /api/sewa/status/:id
     ```
 7.  get sorted sewa by params <br>
-    Mendapatkan semua sewa dalam keadaan sorted
-    params: field, value: field yang ingin di sort
-    contoh request sort by status: GET /api/sewa/sort?field=status
+    Mendapatkan semua sewa dalam keadaan sorted <br>
+    params: field, value: field yang ingin di sort <br>
+    contoh request sort by status: GET /api/sewa/sort?field=status <br>
     ```
     GET /api/sewa/sort
     ```
