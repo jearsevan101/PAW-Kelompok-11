@@ -157,9 +157,40 @@ const updateStatusById = async (req, res) => {
   }
 };
 
+/// READ SEWA
+
+// Read all sewa
+const readAllSewa = async (req, res) => {
+  try {
+    const sewaList = await Sewa.find();
+    res.status(200).json(sewaList);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Read a specific sewa by ID
+const readSewaById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const sewa = await Sewa.findById(id);
+    if (!sewa) {
+      return res.status(404).json({ error: "Tidak bisa melakukan penyewaan" });
+    }
+    res.status(200).json(sewa);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+
+
+
 module.exports = {
   createSewa,
   deleteSewa,
   updateSewaById,
-  updateStatusById
+  updateStatusById,
+  readAllSewa,
+  readSewaById,
 };
