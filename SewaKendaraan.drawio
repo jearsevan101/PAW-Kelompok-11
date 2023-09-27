@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-09-27T05:53:07.081Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="1AWxil8-daS5nGZ_RzyG" version="21.8.2" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2023-09-27T05:56:30.152Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="ZX5v7x_jXULwH5UQOaW_" version="21.8.2" type="github" pages="4">
   <diagram id="5DimzLhOixfFRXWEhtfp" name="Add kendaraan">
     <mxGraphModel dx="778" dy="396" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -453,24 +453,24 @@
     </mxGraphModel>
   </diagram>
   <diagram id="VASNozTQmEII9HMfV6Js" name="Sewa">
-    <mxGraphModel dx="1313" dy="668" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1000" dy="1609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="NVTA8PbXA9L0_ogVLqkD-1" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
-          <mxGeometry x="355" y="37" width="30" height="30" as="geometry" />
+          <mxGeometry x="355" y="-80" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="NVTA8PbXA9L0_ogVLqkD-2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" source="NVTA8PbXA9L0_ogVLqkD-1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="370" y="127" as="targetPoint" />
+            <mxPoint x="370" y="10" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="NVTA8PbXA9L0_ogVLqkD-3" value="Customer memilih kendaraan yang akan disewa" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
-          <mxGeometry x="310" y="127" width="120" height="40" as="geometry" />
+          <mxGeometry x="310" y="10" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="NVTA8PbXA9L0_ogVLqkD-4" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" source="NVTA8PbXA9L0_ogVLqkD-3" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="370" y="227" as="targetPoint" />
+            <mxPoint x="370" y="110" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="NVTA8PbXA9L0_ogVLqkD-5" value="Customer mengajukan penyewaan" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
@@ -515,6 +515,14 @@
         </mxCell>
         <mxCell id="NVTA8PbXA9L0_ogVLqkD-15" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
           <mxGeometry x="355" y="560" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NVTA8PbXA9L0_ogVLqkD-16" value="Customer memasukan jumlah hari penyewaan dan mengkonfirmasi biaya" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="305" y="110" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="NVTA8PbXA9L0_ogVLqkD-17" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="NVTA8PbXA9L0_ogVLqkD-16" parent="1" target="NVTA8PbXA9L0_ogVLqkD-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="210" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
