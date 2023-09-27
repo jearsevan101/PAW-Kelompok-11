@@ -7,7 +7,7 @@ const createKendaraan = async (req, res) => {
   const kota_uppercase = kota.toUpperCase();
 
   try {
-    if (!Regencies.regencies.includes(kota_uppercase)) {
+    if (!Regencies.includes(kota_uppercase)) {
       return res.status(400).json({error: "invalid kota value"});
     }
     const kendaraan = await Kendaraan.create({
@@ -71,7 +71,7 @@ const updateKendaraanById = async (req, res) => {
   const kota_uppercase = kota.toUpperCase();
 
   try {
-    if (!Regencies.regencies.includes(kota_uppercase)) {
+    if (!Regencies.includes(kota_uppercase)) {
       return res.status(400).json({error: "invalid kota value"});
     }
     const kendaraan = await Kendaraan.findByIdAndUpdate(
