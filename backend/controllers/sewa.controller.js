@@ -175,13 +175,34 @@ const readSewaById = async (req, res) => {
   try {
     const sewa = await Sewa.findById(id);
     if (!sewa) {
-      return res.status(404).json({ error: "Tidak bisa melakukan penyewaan" });
+      return res.status(404).json({ error: "Tidak ditemukan data penyewaan" });
     }
     res.status(200).json(sewa);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
+const readSewaByCustomerId = async (req, res) => {
+  const { customer_id } = req.params;
+  try {
+    const sewa = await Sewa.find({ customer_id });
+
+    console.log('Customer ID:', customer_id);
+    console.log('Sewa Data:', sewa);
+
+    if (!sewa || sewa.length === 0) {
+      return res.status(200).json([]); // Return an empty array if no data found
+    }
+
+    res.status(200).json(sewa);
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ error: err.message }); // Handle errors more specifically
+  }
+};
+
+
 
 
 
@@ -193,4 +214,5 @@ module.exports = {
   updateStatusById,
   readAllSewa,
   readSewaById,
+  readSewaByCustomerId,
 };
