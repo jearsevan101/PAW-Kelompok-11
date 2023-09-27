@@ -165,7 +165,7 @@ const readSortedSewa = async (req, res) => {
     const sortBy = req.query.field;
 
     // Check if the sortBy parameter is valid (to prevent injection)
-    const validSortedFields = ["status"];
+    const validSortedFields = ["status", "tanggal_sewa", "tanggal_kembali", "total_harga"];
     if (!validSortedFields.includes(sortBy)) {
       return res.status(400).json({error: "invalid sorting parameter"});
     }
