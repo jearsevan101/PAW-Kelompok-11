@@ -28,8 +28,8 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((conn) => {
-    app.listen(process.env.PORT, () => {
-      console.log(`connected to db & listening on port ${process.env.PORT}`);
+    app.listen(8000, () => { // Change process.env.PORT to 8000
+      console.log(`connected to db & listening on port 8000`);
     });
   })
   .catch((err) => {
