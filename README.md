@@ -1,6 +1,9 @@
 # PAW-Kelompok-11
 Tugas Pengembangan Aplikasi Web
 
+## Dokumentasi API Postman
+https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
+
 ## Dokumentasi Endpoint
 ### Customer
 1.  Get all customers <br>
