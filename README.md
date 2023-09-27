@@ -104,6 +104,13 @@ https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
     ```
     PUT /api/sewa/status/:id
     ```
+7.  get sorted sewa by params <br>
+    Mendapatkan semua sewa dalam keadaan sorted
+    params: field, value: field yang ingin di sort
+    contoh request sort by status: GET /api/sewa/sort?field=status
+    ```
+    GET /api/sewa/sort
+    ```
 ## How to Run this Project in Local
 - [Download](https://nodejs.org/en/download/) and install **Node.js** version `16.15` or higher.
 - Clone this project on your computer.

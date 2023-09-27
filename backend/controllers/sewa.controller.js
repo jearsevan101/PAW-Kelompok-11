@@ -159,6 +159,25 @@ const updateStatusById = async (req, res) => {
 
 /// READ SEWA
 
+// Read sorted sewa by 
+const readSortedSewa = async (req, res) => {
+  try {
+    const sortBy = req.query.field;
+
+    // Check if the sortBy parameter is valid (to prevent injection)
+    const validSortedFields = ["status"];
+    if (!validSortedFields.includes(sortBy)) {
+      return res.status(400).json({error: "invalid sorting parameter"});
+    }
+
+    const result = await Sewa.find().sort({[sortBy]: 1 /* or -1 for descending */ });
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 // Read all sewa
 const readAllSewa = async (req, res) => {
   try {
@@ -188,9 +207,6 @@ const readSewaByCustomerId = async (req, res) => {
   try {
     const sewa = await Sewa.find({ customer_id });
 
-    console.log('Customer ID:', customer_id);
-    console.log('Sewa Data:', sewa);
-
     if (!sewa || sewa.length === 0) {
       return res.status(200).json([]); // Return an empty array if no data found
     }
@@ -202,11 +218,6 @@ const readSewaByCustomerId = async (req, res) => {
   }
 };
 
-
-
-
-
-
 module.exports = {
   createSewa,
   deleteSewa,
@@ -215,4 +226,5 @@ module.exports = {
   readAllSewa,
   readSewaById,
   readSewaByCustomerId,
+  readSortedSewa,
 };

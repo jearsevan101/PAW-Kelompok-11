@@ -1,5 +1,5 @@
 const express = require("express");
-const { createSewa, deleteSewa, updateSewaById,updateStatusById, readAllSewa, readSewaById ,readSewaByCustomerId} = require("../controllers/sewa.controller");
+const { createSewa, deleteSewa, updateSewaById,updateStatusById, readAllSewa, readSewaById ,readSewaByCustomerId, readSortedSewa} = require("../controllers/sewa.controller");
 
 const router = express.Router();
 
@@ -17,6 +17,7 @@ router.put("/status/:id", updateStatusById);
 
 // GET API - Read all sewa
 router.get("/", readAllSewa);
+router.get("/sort", readSortedSewa);
 
 // GET API - Read sewa by ID
 router.get("/:id", readSewaById);
