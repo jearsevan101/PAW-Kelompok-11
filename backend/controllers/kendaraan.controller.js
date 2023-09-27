@@ -23,7 +23,21 @@ const createKendaraan = async (req, res) => {
 // Read all kendaraan
 const readAllKendaraan = async (req, res) => {
   try {
-    const kendaraanList = await Kendaraan.find();
+    // Check if there is a 'sort' query parameter in the request
+    const { sort } = req.query;
+    let sortOptions = {}; // Initialize an empty sort options object
+
+    // If 'sort' is provided and equals 'asc', sort in ascending order by harga
+    if (sort === 'asc') {
+      sortOptions = { harga: 1 };
+    }
+    // If 'sort' is provided and equals 'desc', sort in descending order by harga
+    else if (sort === 'desc') {
+      sortOptions = { harga: -1 };
+    }
+
+    // Find and sort the kendaraan using the sort options
+    const kendaraanList = await Kendaraan.find().sort(sortOptions);
     res.status(200).json(kendaraanList);
   } catch (err) {
     res.status(400).json({ error: err.message });
