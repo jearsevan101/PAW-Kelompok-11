@@ -111,6 +111,12 @@ https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
     ```
     GET /api/sewa/sort
     ```
+8.  Get Sewa by CustomerID
+    Mendapatkan sewa berdasarkan user CustomerID <br>
+    Endpoint: <br>
+    ```
+    GET /api/sewa/customer/:customer_id
+    ```
 ## How to Run this Project in Local
 - [Download](https://nodejs.org/en/download/) and install **Node.js** version `16.15` or higher.
 - Clone this project on your computer.
