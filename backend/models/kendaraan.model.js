@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Regencies = require("../data/kota.js");
 
 const vehicleSchema = new mongoose.Schema({
   nama: {
@@ -12,6 +13,11 @@ const vehicleSchema = new mongoose.Schema({
   lokasi: {
     type: String,
     required: true,
+  },
+  kota: {
+    type: String,
+    enum: Regencies.regencies,
+    required: true
   },
   harga: {
     type: Number,
