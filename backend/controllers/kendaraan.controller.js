@@ -30,8 +30,10 @@ const createKendaraan = async (req, res) => {
 const readAllKendaraan = async (req, res) => {
   try {
     // Check if there is a 'sort' query parameter in the request
-    const { sort } = req.query;
+    const { sort, kota = "" } = req.query;
+
     let sortOptions = {}; // Initialize an empty sort options object
+    let filterOptions = {};
 
     // If 'sort' is provided and equals 'asc', sort in ascending order by harga
     if (sort === 'asc') {
@@ -42,8 +44,13 @@ const readAllKendaraan = async (req, res) => {
       sortOptions = { harga: -1 };
     }
 
+    if (Regencies.includes(kota.toUpperCase())) {
+      filterOptions = {kota: kota.toUpperCase()};
+    }
+
+
     // Find and sort the kendaraan using the sort options
-    const kendaraanList = await Kendaraan.find().sort(sortOptions);
+    const kendaraanList = await Kendaraan.find(filterOptions).sort(sortOptions);
     res.status(200).json(kendaraanList);
   } catch (err) {
     res.status(400).json({ error: err.message });
