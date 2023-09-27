@@ -70,8 +70,35 @@ const updateCustomerById = async (req, res) => {
   }
 };
 
+// READ CUSTOMER
+// Read a specific customer by ID
+const readCustomerById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const customerList = await Customer.findById(id);
+    if (!customer) {
+      return res.status(404).json({ error: "Customer tidak ditemukan" });
+    }
+    res.status(200).json(customer);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Read all customer
+const readAllCustomer = async (req, res) => {
+  try {
+    const customerList = await Customer.find();
+    res.status(200).json(customerList);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createCustomer,
   deleteCustomer,
-  updateCustomerById
+  updateCustomerById,
+  readCustomerById,
+  readAllCustomer
 };
