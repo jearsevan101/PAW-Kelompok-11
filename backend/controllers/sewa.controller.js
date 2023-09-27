@@ -1,14 +1,52 @@
 const Sewa = require("../models/sewa.model");
+const Kendaraan = require("../models/kendaraan.model");
+const Customer = require("../models/customer.model");
 const mongoose = require("mongoose");
-// create new sewa
+
 const createSewa = async (req, res) => {
-  const { kendaraan_id, customer_id, tanggal_sewa, tanggal_kembali, total_harga, status } = req.body;
-    
-  // Validate the status field
-  if (!["DISEWA", "KONFIRMASI", "KEMBALI", "DITOLAK"].includes(status)) {
-    return res.status(400).json({ error: "Invalid status value" });
-  }
+  const { kendaraan_id, customer_id, tanggal_sewa, tanggal_kembali, total_harga } = req.body;
+  const status = "KONFIRMASI";
+
   try {
+    // Find the Kendaraan and Customer
+    const kendaraan = await Kendaraan.findById(kendaraan_id);
+    const customer = await Customer.findById(customer_id);
+
+    if (!kendaraan) {
+      return res.status(404).json({ error: "Kendaraan tidak ditemukan" });
+    }
+
+    if (!customer) {
+      return res.status(404).json({ error: "Customer tidak ditemukan" });
+    }
+
+    if (kendaraan.available > 0) {
+      // Update Kendaraan availability
+      const updatedKendaraan = await Kendaraan.findByIdAndUpdate(
+        kendaraan_id,
+        { available: kendaraan.available - 1 },
+        { new: true }
+      );
+
+      if (!updatedKendaraan) {
+        return res.status(500).json({ error: "Server Error" });
+      }
+    } else {
+      return res.status(400).json({ error: "Kendaraan out of stock" });
+    }
+
+    // Update Customer status
+    const updatedCustomer = await Customer.findByIdAndUpdate(
+      customer_id,
+      { sewa: "MENGAJUKAN" },
+      { new: true }
+    );
+
+    if (!updatedCustomer) {
+      return res.status(500).json({ error: "Server Error" });
+    }
+
+    // Create a new Sewa record
     const sewa = await Sewa.create({
       kendaraan_id,
       customer_id,
@@ -16,12 +54,14 @@ const createSewa = async (req, res) => {
       tanggal_kembali,
       total_harga,
       status,
-    }); 
+    });
+
     res.status(200).json(sewa);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 // Delete sewa by id
 const deleteSewa = async (req, res) => {
