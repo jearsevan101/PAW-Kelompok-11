@@ -5,6 +5,12 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+  },
   password: {
     type: String,
     required: true,

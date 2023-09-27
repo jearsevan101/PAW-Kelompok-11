@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const sewaSchema = new mongoose.Schema({
   kendaraan_id: {
     type: mongoose.SchemaTypes.ObjectId,
+    ref: "kendaraan",
     required: true,
   },
   customer_id: {

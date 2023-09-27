@@ -10,6 +10,6 @@ router.post("/", createSewa);
 router.delete("/:id", deleteSewa);
 
 //PUT API - update customer by ID
-router.put("/:id", updateSewaById)
+router.put("/:id", updateSewaById);
 
 module.exports = router;
