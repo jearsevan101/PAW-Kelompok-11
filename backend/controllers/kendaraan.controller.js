@@ -1,14 +1,20 @@
 const Kendaraan = require("../models/kendaraan.model");
 const mongoose = require("mongoose");
+const Regencies = require("../data/kota.js");
 // create new kendaraan
 const createKendaraan = async (req, res) => {
-  const { nama, deskripsi, lokasi, harga, available, img_url } = req.body;
+  const { nama, deskripsi, lokasi, kota, harga, available, img_url } = req.body;
+  const kota_uppercase = kota.toUpperCase();
 
   try {
+    if (!Regencies.regencies.includes(kota_uppercase)) {
+      return res.status(400).json({error: "invalid kota value"});
+    }
     const kendaraan = await Kendaraan.create({
       nama,
       deskripsi,
       lokasi,
+      kota: kota_uppercase,
       harga,
       available,
       img_url,
@@ -61,15 +67,20 @@ const readKendaraanById = async (req, res) => {
 // Update kendaraan
 const updateKendaraanById = async (req, res) => {
   const { id } = req.params;
-  const { nama, deskripsi, lokasi, harga, available, img_url } = req.body;
+  const { nama, deskripsi, lokasi, kota, harga, available, img_url } = req.body;
+  const kota_uppercase = kota.toUpperCase();
 
   try {
+    if (!Regencies.regencies.includes(kota_uppercase)) {
+      return res.status(400).json({error: "invalid kota value"});
+    }
     const kendaraan = await Kendaraan.findByIdAndUpdate(
       id,
       {
         nama,
         deskripsi,
         lokasi,
+        kota: kota_uppercase,
         harga,
         available,
         img_url,
