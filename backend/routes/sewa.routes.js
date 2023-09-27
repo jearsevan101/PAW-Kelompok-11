@@ -1,5 +1,5 @@
 const express = require("express");
-const { createSewa, deleteSewa, updateSewaById } = require("../controllers/sewa.controller");
+const { createSewa, deleteSewa, updateSewaById,updateStatusById } = require("../controllers/sewa.controller");
 
 const router = express.Router();
 
@@ -11,5 +11,8 @@ router.delete("/:id", deleteSewa);
 
 //PUT API - update customer by ID
 router.put("/:id", updateSewaById);
+
+//PUT API - update status customer by ID
+router.put("/status/:id", updateStatusById);
 
 module.exports = router;
