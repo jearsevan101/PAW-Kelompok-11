@@ -67,6 +67,11 @@ https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
     ```
     PUT /api/kendaraan/:id
     ```
+6. Sort Kendaraan by Harga <br>
+   Menampilkan semua kendaraan dan mengurutkannya berdasarkan harga secara asc (naik) atau desc (menurun)
+   ```
+   GET /api/kendaraan?sort=asc
+   ```
 ### Sewa
 1.  Get all Sewa <br>
     Mendapatkan semua data Sewa yang ada di database <br>
