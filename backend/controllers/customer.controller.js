@@ -76,10 +76,10 @@ const readCustomerById = async (req, res) => {
   const { id } = req.params;
   try {
     const customerList = await Customer.findById(id);
-    if (!customer) {
+    if (!customerList) {
       return res.status(404).json({ error: "Customer tidak ditemukan" });
     }
-    res.status(200).json(customer);
+    res.status(200).json(customerList);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
