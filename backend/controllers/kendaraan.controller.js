@@ -26,36 +26,39 @@ const createKendaraan = async (req, res) => {
   }
 };
 
-// Read all kendaraan
+// Read all kendaraan with sorting, filtering by kota, and searching by name
 const readAllKendaraan = async (req, res) => {
   try {
-    // Check if there is a 'sort' query parameter in the request
-    const { sort, kota = "" } = req.query;
 
-    let sortOptions = {}; // Initialize an empty sort options object
+    const { sort, kota = "", search = "" } = req.query;
+
+    let sortOptions = {};
     let filterOptions = {};
 
-    // If 'sort' is provided and equals 'asc', sort in ascending order by harga
     if (sort === 'asc') {
       sortOptions = { harga: 1 };
     }
-    // If 'sort' is provided and equals 'desc', sort in descending order by harga
+
     else if (sort === 'desc') {
       sortOptions = { harga: -1 };
     }
 
-    if (Regencies.includes(kota.toUpperCase())) {
-      filterOptions = {kota: kota.toUpperCase()};
+    if (kota && Regencies.includes(kota.toUpperCase())) {
+      filterOptions.kota = kota.toUpperCase();
     }
 
+    if (search) {
+      filterOptions.nama = { $regex: search, $options: 'i' }; // Case-insensitive search
+    }
 
-    // Find and sort the kendaraan using the sort options
+    // Find and sort the kendaraan using the sort options, filter by 'kota', and search by 'nama'
     const kendaraanList = await Kendaraan.find(filterOptions).sort(sortOptions);
     res.status(200).json(kendaraanList);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 // Read a specific kendaraan by ID
 const readKendaraanById = async (req, res) => {
