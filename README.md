@@ -148,3 +148,23 @@ Start the server
 ```bash
   npm run dev
 ```
+
+### Frontend
+
+Go to the server project directory
+
+```bash
+  cd frontend
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
