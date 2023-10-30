@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Button from "@/components/Button";
 import CarCard from "@/components/CarCard";
 
@@ -17,7 +18,9 @@ export default function Home() {
                 low price.
               </p>
               <div className="w-1/2">
-                <Button>Get Started</Button>
+                <Link href="#CarList">
+                  <Button>Get Started</Button>
+                </Link>
               </div>
             </div>
             <div className="absolute inset-0 pointer-events-none">
@@ -31,13 +34,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-10">
+          <div id="CarList" className="mt-10">
             <span className="text-c-text-grey font-semibold">Cars List</span>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
               {[...Array(16)].map((_, index) => (
-                <CarCard
-                  key={index}
-                />
+                <CarCard key={index} />
               ))}
             </div>
           </div>
