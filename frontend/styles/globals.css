@@ -4,8 +4,15 @@
 
 * {
   font-family: "Plus Jakarta Sans", sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: #F6F7F9;
+}
+
+.pattern {
+  background-image: url('../public/pattern.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
 }

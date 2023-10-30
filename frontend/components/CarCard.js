@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+
 import Button from "./Button";
 
 import { HiOutlineLocationMarker } from "react-icons/hi";
@@ -56,9 +58,9 @@ const CarCard = () => {
           <p className="text-xl font-bold text-c-text-dark">
             Rp200.000 <span className="text-c-text-grey text-sm">/day</span>
           </p>
-          <div>
+          <Link href='/car/id'>
             <Button>Rent Now</Button>
-          </div>
+          </Link>
         </div>
       </div>
     </>
