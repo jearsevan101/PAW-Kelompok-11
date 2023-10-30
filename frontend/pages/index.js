@@ -38,7 +38,9 @@ export default function Home() {
             <span className="text-c-text-grey font-semibold">Cars List</span>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
               {[...Array(16)].map((_, index) => (
-                <CarCard key={index} />
+                <Link href="/car/1" key={index}>
+                  <CarCard key={index} />
+                </Link>
               ))}
             </div>
           </div>
