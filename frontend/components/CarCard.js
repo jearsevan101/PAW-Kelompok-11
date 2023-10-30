@@ -10,7 +10,7 @@ import { RiSteering2Fill } from "react-icons/ri";
 const CarCard = () => {
   return (
     <>
-      <div className="bg-white rounded-xl hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] transition-all p-6 gap-y-8 flex flex-col overflow-hidden">
+      <div className="bg-white rounded-xl p-6 gap-y-8 flex flex-col overflow-hidden">
         <div className="absolute">
           {[1, 2, 3].map((index) => (
             <div
@@ -58,8 +58,8 @@ const CarCard = () => {
           <p className="text-xl font-bold text-c-text-dark">
             Rp200.000 <span className="text-c-text-grey text-sm">/day</span>
           </p>
-          <Link href='/orders/form'>
-            <Button>Rent Now</Button>
+          <Link href='/car/1'>
+            <Button>More Detail</Button>
           </Link>
         </div>
       </div>

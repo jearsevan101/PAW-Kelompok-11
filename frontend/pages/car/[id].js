@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+
 import CarCard from "@/components/CarCard";
 import Button from "@/components/Button";
 
@@ -59,9 +61,9 @@ export default function CarDescription() {
                     Rp200.000{" "}
                     <span className="text-c-text-grey text-sm">/day</span>
                   </p>
-                  <div>
+                  <Link href='/orders/form'>
                     <Button>Rent Now</Button>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
