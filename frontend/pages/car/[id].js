@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import CarCard from "@/components/CarCard";
 import Button from "@/components/Button";
@@ -39,7 +40,9 @@ export default function CarDescription() {
                     </div>
                     <div className="flex flex-row justify-between w-1/2">
                       <span className="font-regular">Gasoline</span>
-                      <span className="font-semibold text-[#596780]">70 Liter</span>
+                      <span className="font-semibold text-[#596780]">
+                        70 Liter
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -51,9 +54,7 @@ export default function CarDescription() {
                         Manual
                       </span>
                     </div>
-                    <div className="flex flex-row justify-between w-1/2">
-
-                    </div>
+                    <div className="flex flex-row justify-between w-1/2"></div>
                   </div>
                 </div>
                 <div className="flex mt-12 items-center justify-between">
@@ -61,7 +62,7 @@ export default function CarDescription() {
                     Rp200.000{" "}
                     <span className="text-c-text-grey text-sm">/day</span>
                   </p>
-                  <Link href='/orders/form'>
+                  <Link href="/orders/form">
                     <Button>Rent Now</Button>
                   </Link>
                 </div>
@@ -109,31 +110,75 @@ const MainImage = ({ src }) => {
   );
 };
 
-const ViewMainImage = ({ src }) => {
+const ViewMainImage = ({ src, className }) => {
   return (
-    <div className="w-full h-32 flex items-center py-4 bg-c-primary pattern rounded-lg">
+    <div
+      className={`${className} box-border w-full h-32 flex items-center py-4 bg-c-primary pattern rounded-lg`}>
       <div className="w-full h-[50px] relative">
         <Image src={src} alt="Car" layout="fill" objectFit="contain" />
       </div>
+      <div className="inner-border box-border"></div>
     </div>
   );
 };
 
-const CarouselImage = ({ src }) => {
+const CarouselImage = () => {
+  const images = ["/mobil.png", "/view2.png", "/view3.png"];
+  const [selectedImage, setSelectedImage] = useState("/mobil.png");
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+
   return (
     <div className="w-full md:w-1/3">
-      <MainImage src="/mobil.png" />
+      {selectedImage === "/mobil.png" ? (
+        <MainImage src={selectedImage} />
+      ) : (
+        <div className="relative w-full h-[350px] main-image">
+          <Image
+            className="rounded-lg"
+            src={selectedImage}
+            alt="Car"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+      )}
       <div className="flex flex-row gap-4 mt-4">
-        <div className="h-32 w-full box-border">
-          <ViewMainImage src="/mobil.png" />
-        </div>
-
-        <div className="relative w-full h-32 rounded-lg">
-          <Image src="/view2.png" alt="Car" layout="fill" objectFit="cover" />
-        </div>
-        <div className="relative w-full h-32 rounded-lg">
-          <Image src="/view3.png" alt="Car" layout="fill" objectFit="cover" />
-        </div>
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`relative duration-75 transition-all w-full h-32 ${
+              image === selectedImage && image !== "/mobil.png"
+                ? "border-c-primary box-border border-[3px] border-solid rounded-lg"
+                : ""
+            }`}
+            onClick={() => handleImageClick(image)}>
+            {image !== "/mobil.png" ? (
+              <Image
+                className={`transition-all rounded-lg ${
+                  image === selectedImage
+                    ? "border-[#F6F7F9] border-[6px] border-solid"
+                    : ""
+                }`}
+                src={image}
+                alt="Car"
+                layout="fill"
+                objectFit="cover"
+              />
+            ) : (
+              <ViewMainImage
+                className={`transition-all ${
+                  image === selectedImage
+                    ? "border-[#F6F7F9] rounded-lg border-[9px] border-solid "
+                    : ""
+                }`}
+                src={image}
+              />
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
