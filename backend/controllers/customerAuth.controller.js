@@ -59,23 +59,7 @@ const loginCustomer = async (req, res) => {
   }
 };
 
-const logoutCustomer = async (req, res) => {
-  const token = req.cookies.token;
-
-  if(!token){
-    return res.status(401).json({message: "No customer is logged in"});
-  }
-  try{
-    res.status(200)
-      .clearCookie("token")
-      .json({message: "Logout success"});
-  }catch(err){
-    res.status(400).json({ error: err.message });
-  }
-};
-
 module.exports = {
   registerCustomer,
   loginCustomer,
-  logoutCustomer,
 };
