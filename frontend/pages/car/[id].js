@@ -145,7 +145,7 @@ const CarouselImage = () => {
           />
         </div>
       )}
-      <div className="flex flex-row gap-4 mt-4">
+      <div className="flex cursor-pointer flex-row gap-4 mt-4">
         {images.map((image, index) => (
           <div
             key={index}
