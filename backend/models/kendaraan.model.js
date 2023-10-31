@@ -46,7 +46,7 @@ const vehicleSchema = new mongoose.Schema({
     required: true,
   },
   img_url: {
-    type: String,
+    type: [String],
   },
 });
 

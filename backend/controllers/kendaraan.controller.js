@@ -20,7 +20,7 @@ const createKendaraan = async (req, res) => {
       kota: kota_uppercase,
       harga,
       available,
-      img_url,
+      img_url: img_url,
       capacity,
       fuel_capacity,
       type,
