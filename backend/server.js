@@ -7,6 +7,9 @@ const app = express();
 const kendraanRoutes = require("./routes/kendaraan.routes");
 const sewaRoutes = require("./routes/sewa.routes");
 const customerRoutes = require("./routes/customer.routes");
+const authRoutes = require("./routes/auth.routes.js");
+
+const {verifyToken, verifyAdmin} = require("./middleware/auth.js");
 
 // middleware
 app.use(express.json());
@@ -18,8 +21,10 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/kendaraan", kendraanRoutes);
-app.use("/api/sewa", sewaRoutes);
-app.use("/api/customer", customerRoutes);
+app.use("/api/sewa", verifyToken, sewaRoutes);
+app.use("/api/customer", verifyToken, verifyAdmin, customerRoutes);
+app.use("/api/auth", authRoutes);
+
 
 // connect to db
 mongoose
@@ -27,9 +32,9 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((conn) => {
+  .then(() => {
     app.listen(8000, () => { // Change process.env.PORT to 8000
-      console.log(`connected to db & listening on port 8000`);
+      console.log("connected to db & listening on port 8000");
     });
   })
   .catch((err) => {
