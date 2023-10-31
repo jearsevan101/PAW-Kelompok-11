@@ -23,6 +23,24 @@ const vehicleSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  fuel_capacity: {
+    type: Number,
+    required: true,
+  },
+  capacity: {
+    type: Number,
+    required: true,
+  },
+  type: {
+    type: String,
+    enum: ["AUTO", "MANUAL"],
+    default: "MANUAL",
+  },
+  jumlah_tersewa: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
   available: {
     type: Number,
     required: true,

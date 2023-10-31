@@ -3,12 +3,15 @@ const mongoose = require("mongoose");
 const Regencies = require("../data/kota.js");
 // create new kendaraan
 const createKendaraan = async (req, res) => {
-  const { nama, deskripsi, lokasi, kota, harga, available, img_url } = req.body;
+  const { nama, deskripsi, lokasi, kota, harga, available, img_url, capacity, fuel_capacity, type, jumlah_tersewa} = req.body;
   const kota_uppercase = kota.toUpperCase();
 
   try {
     if (!Regencies.includes(kota_uppercase)) {
       return res.status(400).json({error: "invalid kota value"});
+    }
+    if ((type !== "AUTO") || (type !== "MANUAL")) {
+      return res.status(400).json({error: "invalid car type value"});
     }
     const kendaraan = await Kendaraan.create({
       nama,
@@ -18,6 +21,10 @@ const createKendaraan = async (req, res) => {
       harga,
       available,
       img_url,
+      capacity,
+      fuel_capacity,
+      type,
+      jumlah_tersewa
     });
 
     res.status(200).json(kendaraan);
@@ -35,11 +42,11 @@ const readAllKendaraan = async (req, res) => {
     let sortOptions = {};
     let filterOptions = {};
 
-    if (sort === 'asc') {
+    if (sort === "asc") {
       sortOptions = { harga: 1 };
     }
 
-    else if (sort === 'desc') {
+    else if (sort === "desc") {
       sortOptions = { harga: -1 };
     }
 
@@ -48,7 +55,7 @@ const readAllKendaraan = async (req, res) => {
     }
 
     if (search) {
-      filterOptions.nama = { $regex: search, $options: 'i' }; // Case-insensitive search
+      filterOptions.nama = { $regex: search, $options: "i" }; // Case-insensitive search
     }
 
     // Find and sort the kendaraan using the sort options, filter by 'kota', and search by 'nama'
@@ -77,7 +84,7 @@ const readKendaraanById = async (req, res) => {
 // Update kendaraan
 const updateKendaraanById = async (req, res) => {
   const { id } = req.params;
-  const { nama, deskripsi, lokasi, kota, harga, available, img_url } = req.body;
+  const { nama, deskripsi, lokasi, kota, harga, available, img_url, capacity, fuel_capacity, type, jumlah_tersewa } = req.body;
   const kota_uppercase = kota.toUpperCase();
 
   try {
@@ -94,6 +101,10 @@ const updateKendaraanById = async (req, res) => {
         harga,
         available,
         img_url,
+        capacity,
+        fuel_capacity,
+        type,
+        jumlah_tersewa
       },
       { new: true }
     );
