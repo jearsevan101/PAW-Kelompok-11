@@ -10,7 +10,7 @@ const createKendaraan = async (req, res) => {
     if (!Regencies.includes(kota_uppercase)) {
       return res.status(400).json({error: "invalid kota value"});
     }
-    if ((type !== "AUTO") || (type !== "MANUAL")) {
+    if ((type !== "AUTO") && (type !== "MANUAL")) {
       return res.status(400).json({error: "invalid car type value"});
     }
     const kendaraan = await Kendaraan.create({
