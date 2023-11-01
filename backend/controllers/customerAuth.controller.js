@@ -43,7 +43,7 @@ const loginCustomer = async (req, res) => {
       return res.status(400).json({error: "invalid password"});
     }
 
-    const token = jwt.sign({id: customer._id, username: customer.username}, process.env.JWT_SECRET);
+    const token = jwt.sign({id: customer._id, username: customer.username, }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
     const data = {
       customer: customer,
