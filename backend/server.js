@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 // express app
@@ -8,6 +9,8 @@ const kendraanRoutes = require("./routes/kendaraan.routes");
 const sewaRoutes = require("./routes/sewa.routes");
 const customerRoutes = require("./routes/customer.routes");
 const authRoutes = require("./routes/auth.routes.js");
+
+app.use(cors());
 
 const {verifyToken, verifyAdmin} = require("./middleware/auth.js");
 
