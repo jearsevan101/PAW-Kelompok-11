@@ -1,85 +1,124 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import CarCard from "@/components/CarCard";
 import Button from "@/components/Button";
+import Loading from "@/components/Loading";
 
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
 export default function CarDescription() {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [kendaraanList, setKendaraanList] = useState([]);
+  const [carDetails, setCarDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/kendaraan")
+      .then((response) => {
+        setKendaraanList(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/kendaraan/${id}`)
+      .then((response) => {
+        setCarDetails(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching car details:", error);
+      });
+  }, [id]);
+
   return (
     <>
       <div className="container min-h-screen mx-auto">
-        <main className="my-6 mx-4">
-          <div className="flex flex-col md:flex-row gap-8">
-            <CarouselImage />
-            <div className="w-full md:w-2/3 bg-white rounded-xl p-8">
-              <div>
-                <h3 className="font-bold text-c-text-dark text-3xl">
-                  All New Terios
-                </h3>
-                <div className="flex text-sm items-center gap-1 flex-row text-c-text-grey">
-                  <HiOutlineLocationMarker />
-                  <p className="font-medium ">D.I Yogyakarta</p>
-                </div>
-                <p className="mt-6 text-[#596780]">
-                  All New Terios" is a compelling and innovative crossover SUV
-                  that sets new standards for versatility, performance, and
-                  design. With a harmonious blend of cutting-edge technology and
-                  sophisticated engineering, this vehicle caters to the demands
-                  of the modern driver.
-                </p>
-                <div className=" items-center mt-28 gap-2 font-regular  text-c-text-grey">
-                  <div className="flex flex-row w-full md:w-1/2 gap-12">
-                    <div className="flex flex-row justify-between w-1/2">
-                      <span className="font-regular">Capacity</span>
-                      <span className="font-semibold text-[#596780]">
-                        6 Person
-                      </span>
-                    </div>
-                    <div className="flex flex-row justify-between w-1/2">
-                      <span className="font-regular">Gasoline</span>
-                      <span className="font-semibold text-[#596780]">
-                        70 Liter
-                      </span>
+        {carDetails ? (
+          <main className="my-6 mx-4">
+            <div className="flex flex-col md:flex-row gap-8">
+              <CarouselImage data={carDetails.img_url} />
+              <div className="w-full md:w-2/3 bg-white rounded-xl p-8">
+                <div>
+                  <h3 className="font-bold text-c-text-dark text-3xl">
+                    {carDetails.nama}
+                  </h3>
+                  <div className="flex text-sm mt-1 items-center gap-1 flex-row text-c-text-grey">
+                    <HiOutlineLocationMarker />
+                    <p className="font-medium">{carDetails.kota}</p>
+                  </div>
+                  <p className="mt-6 text-[#596780]">{carDetails.deskripsi}</p>
+                  <div className=" items-center mt-28 gap-2 font-regular  text-c-text-grey">
+                    <div className="flex flex-row w-full md:w-1/2 gap-12">
+                      <div className="flex flex-row justify-between w-1/2">
+                        <span className="font-regular">Capacity</span>
+                        <span className="font-semibold text-[#596780]">
+                          {`${carDetails.capacity} Person`}
+                        </span>
+                      </div>
+                      <div className="flex flex-row justify-between w-1/2">
+                        <span className="font-regular">Gasoline</span>
+                        <span className="font-semibold text-[#596780]">
+                          {`${carDetails.fuel_capacity} Liter`}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className=" items-center mt-2 gap-2 font-regular  text-c-text-grey">
-                  <div className="flex flex-row w-full md:w-1/2 gap-12">
-                    <div className="flex flex-row justify-between w-1/2">
-                      <span className="font-regular">Steering</span>
-                      <span className="font-semibold text-[#596780]">
-                        Manual
-                      </span>
+                  <div className=" items-center mt-2 gap-2 font-regular  text-c-text-grey">
+                    <div className="flex flex-row w-full md:w-1/2 gap-12">
+                      <div className="flex flex-row justify-between w-1/2">
+                        <span className="font-regular">Steering</span>
+                        <span className="font-semibold text-[#596780]">
+                          {`${carDetails.type}`}
+                        </span>
+                      </div>
+                      <div className="flex flex-row justify-between w-1/2"></div>
                     </div>
-                    <div className="flex flex-row justify-between w-1/2"></div>
                   </div>
-                </div>
-                <div className="flex mt-12 items-center justify-between">
-                  <p className="text-3xl font-bold text-c-text-dark">
-                    Rp200.000{" "}
-                    <span className="text-c-text-grey text-sm">/day</span>
-                  </p>
-                  <Link href="/orders/form">
-                    <Button>Rent Now</Button>
-                  </Link>
+                  <div className="flex mt-12 items-center justify-between">
+                    {carDetails.harga ? (
+                      <p className="text-3xl font-bold text-c-text-dark">
+                        {`Rp${carDetails.harga.toLocaleString("id-ID")}`}
+                        <span className="text-c-text-grey text-sm">/day</span>
+                      </p>
+                    ) : (
+                      <p>Price not available</p>
+                    )}
+                    <Link href="/orders/form">
+                      <Button>Rent Now</Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="mt-8">
-            <span className="text-c-text-grey font-semibold">
-              Recommendation Car
-            </span>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
-              {[...Array(4)].map((_, index) => (
-                <CarCard key={index} />
-              ))}
+            <div className="mt-8">
+              <span className="text-c-text-grey font-semibold">
+                Recommendation Car
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
+                {kendaraanList.slice(0, 4).map((kendaraan, index) => (
+                  <CarCard key={index} data={kendaraan} />
+                ))}
+              </div>
             </div>
+          </main>
+        ) : (
+          <div className="flex items-center min-h-screen justify-center ">
+            <Loading />
           </div>
-        </main>
+        )}
       </div>
     </>
   );
@@ -122,9 +161,9 @@ const ViewMainImage = ({ src, className }) => {
   );
 };
 
-const CarouselImage = () => {
-  const images = ["/mobil.png", "/view2.png", "/view3.png"];
-  const [selectedImage, setSelectedImage] = useState("/mobil.png");
+const CarouselImage = ({ data }) => {
+  const images = data;
+  const [selectedImage, setSelectedImage] = useState(images[0]);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -132,7 +171,7 @@ const CarouselImage = () => {
 
   return (
     <div className="w-full md:w-1/3">
-      {selectedImage === "/mobil.png" ? (
+      {selectedImage === images[0] ? (
         <MainImage src={selectedImage} />
       ) : (
         <div className="relative w-full h-[350px] main-image">
@@ -150,12 +189,12 @@ const CarouselImage = () => {
           <div
             key={index}
             className={`relative duration-75 transition-all w-full h-32 ${
-              image === selectedImage && image !== "/mobil.png"
+              image === selectedImage && image !== images[0]
                 ? "border-c-primary box-border border-[3px] border-solid rounded-lg"
                 : ""
             }`}
             onClick={() => handleImageClick(image)}>
-            {image !== "/mobil.png" ? (
+            {image !== images[0] ? (
               <Image
                 className={`transition-all rounded-lg ${
                   image === selectedImage
