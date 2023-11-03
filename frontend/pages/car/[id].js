@@ -21,7 +21,7 @@ export default function CarDescription() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/kendaraan")
+      .get("hhttps://paw-kelompok-11-server.vercel.app/api/kendaraan")
       .then((response) => {
         setKendaraanList(response.data);
         setLoading(false);
@@ -34,7 +34,7 @@ export default function CarDescription() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/kendaraan/${id}`)
+      .get(`https://paw-kelompok-11-server.vercel.app/api/kendaraan/${id}`)
       .then((response) => {
         setCarDetails(response.data);
       })

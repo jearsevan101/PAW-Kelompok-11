@@ -11,7 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    const apiUrl = "http://localhost:8000/api/kendaraan";
+    const apiUrl = "https://paw-kelompok-11-server.vercel.app/api/kendaraan";
 
     axios
       .get(apiUrl)
