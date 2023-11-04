@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "@/components/Button";
+import Navbar from "@/components/navbar";
 import CarCard from "@/components/CarCard";
 import Loading from "@/components/Loading";
 
@@ -27,7 +28,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="container min-h-screen mx-auto">
+      <Navbar/>
+      <div className="container min-h-screen mx-auto pt-20">
         {loading ? (
           <div className="flex items-center min-h-screen justify-center ">
             <Loading />
