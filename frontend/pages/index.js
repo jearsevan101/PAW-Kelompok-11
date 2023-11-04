@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 import Navbar from "@/components/navbar";
 import CarCard from "@/components/CarCard";
 import Loading from "@/components/Loading";
+import Footer from "@/components/footer";
 
 export default function Home() {
   const [kendaraanList, setKendaraanList] = useState([]);
@@ -73,6 +74,7 @@ export default function Home() {
           </main>
         )}
       </div>
+      <Footer/>
     </>
   );
 }

@@ -8,6 +8,8 @@ import axios from "axios";
 import CarCard from "@/components/CarCard";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
@@ -45,7 +47,8 @@ export default function CarDescription() {
 
   return (
     <>
-      <div className="container min-h-screen mx-auto">
+      <Navbar/>
+      <div className="container min-h-screen mx-auto pt-20">
         {carDetails ? (
           <main className="my-6 mx-4">
             <div className="flex flex-col md:flex-row gap-8">
@@ -120,6 +123,7 @@ export default function CarDescription() {
           </div>
         )}
       </div>
+      <Footer/>
     </>
   );
 }
