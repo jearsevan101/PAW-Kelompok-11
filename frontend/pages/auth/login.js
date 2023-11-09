@@ -1,8 +1,8 @@
 export default function Login() {
-    return (
-      <>
+  return (
+    <main>
       {/* Buat Riwayat Order */}
-        <h1>Login Page</h1>
-      </>
-    );
-  }
+      <h1>Login Page</h1>
+    </main>
+  );
+}

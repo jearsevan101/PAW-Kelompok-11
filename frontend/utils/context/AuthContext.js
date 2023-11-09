@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import useAxios from "@/utils/hooks/useAxios";
+import useAxios from "../hooks/useAxios";
 import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
 
