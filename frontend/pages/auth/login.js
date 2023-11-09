@@ -1,8 +1,42 @@
+import Button from "@/components/Button";
+import { useContext, useState } from "react";
+import { useRouter } from "next/router";
+
 export default function Login() {
   return (
-    <>
+    <div
+      className="flex flex-col justify-center items-center min-h-screen"
+      style={{ backgroundColor: "#F6F7F9" }}
+    >
       {/* Buat Riwayat Order */}
-      <h1>Login Page</h1>
-    </>
+      <h1 className="text-6xl mb-1">Login</h1>
+      <section className="mt-1 p-10 px-12 w-[571px] h-[402px] bg-white rounded-[12px] flex flex-col gap-4 justify-center items-center">
+        <form className="flex flex-col gap-2">
+          <label className="flex flex-col gap-2 w-[456px] font-medium text-xl">
+            Username
+            <input
+              className="w-[456px] h-[56px]"
+              style={{ backgroundColor: "#F6F7F9" }}
+              placeholder="Masukkan Username"
+            />
+          </label>
+          <label className="flex flex-col gap-2 w-[456px] font-medium text-xl">
+            Password
+            <input
+              type="password"
+              className="w-[456px] h-[56px]"
+              style={{ backgroundColor: "#F6F7F9" }}
+              placeholder="Masukkan Password"
+            />
+          </label>
+        </form>
+        <button
+          type="submit"
+          className="bg-c-primary font-semibold text-white px-5 py-3 rounded-md hover:opacity-90 focus:outline-none focus:ring"
+        >
+          Login
+        </button>
+      </section>
+    </div>
   );
 }
