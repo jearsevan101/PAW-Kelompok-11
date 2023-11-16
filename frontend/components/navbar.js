@@ -1,13 +1,23 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import Button from "./Button";
 import Searchbar from "./Searchbar";
+import Filter from "./Filter";
 
 const Navbar = () => {
+  const [isFilterVisible, setFilterVisible] = useState(false);
   const handleSearch = (query) => {
     // Perform search logic with the query
     console.log("Searching for:", query);
   };
+  const filterClicked =()=>{
+    if(isFilterVisible == true){
+      setFilterVisible(false);
+    }else {
+      setFilterVisible(true);
+    }
+  }
 
   return (
     <header
@@ -20,13 +30,14 @@ const Navbar = () => {
             <Image src="/Logo.svg" alt="Logo" width={100} height={50} />
           </Link>
           <div className="ml-20">
-            <Searchbar onSearch={handleSearch} />
+            <Searchbar onSearch={handleSearch} filterClick={filterClicked} />
           </div>
         </div>
         <Link href={`/auth/login`}>
           <Button>Login</Button>
         </Link>
       </nav>
+      {isFilterVisible && <Filter />}
     </header>
   );
 };
