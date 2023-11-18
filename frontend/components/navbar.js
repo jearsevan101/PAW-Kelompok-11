@@ -4,8 +4,10 @@ import { useState } from "react";
 import Button from "./Button";
 import Searchbar from "./Searchbar";
 import Filter from "./Filter";
+import Profile from "./Profile";
 
 const Navbar = () => {
+  const [userLogin, setUserLogin] = useState(true);
   const [isFilterVisible, setFilterVisible] = useState(false);
   const handleSearch = (query) => {
     // Perform search logic with the query
@@ -33,11 +35,16 @@ const Navbar = () => {
             <Searchbar onSearch={handleSearch} filterClick={filterClicked} />
           </div>
         </div>
-        <Link href={`/auth/login`}>
-          <Button>Login</Button>
-        </Link>
+        
+        {userLogin?(
+          <Profile/>
+        ) : (
+          <Link href={`/auth/login`}>
+            <Button>Login</Button>
+          </Link>  
+        )}
       </nav>
-      {isFilterVisible && <Filter />}
+      {isFilterVisible && <Filter/>}
     </header>
   );
 };

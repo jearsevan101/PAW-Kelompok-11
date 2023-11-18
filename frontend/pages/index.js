@@ -7,7 +7,7 @@ import Navbar from "@/components/navbar";
 import CarCard from "@/components/CarCard";
 import Loading from "@/components/Loading";
 import Footer from "@/components/footer";
-
+import Profile from "@/components/Profile";
 export default function Home() {
   const [kendaraanList, setKendaraanList] = useState([]);
   const [loading, setLoading] = useState(true); 
@@ -30,6 +30,7 @@ export default function Home() {
   return (
     <>
       <Navbar/>
+      <Profile/>
       <div className="container min-h-screen mx-auto pt-20">
         {loading ? (
           <div className="flex items-center min-h-screen justify-center ">
