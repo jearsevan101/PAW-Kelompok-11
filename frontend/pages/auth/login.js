@@ -1,15 +1,40 @@
 import Button from "@/components/Button";
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
+import { AuthContext } from "@/utils/context/AuthContext";
+import { onError, onSuccess } from "@/utils/hooks/useNotification";
 import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
 
-  function handleLogin(event) {
+  const { loginCustomer } = useContext(AuthContext);
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-    router.replace("/");
-  }
+    try {
+      const response = await loginCustomer(loginData);
+      if (response) {
+        onSuccess("Login Success");
+        router.push("/");
+      } else {
+        onerror("Login Failed");
+      }
+    } catch (err) {
+      onError("error: ", err.message);
+    }
+  };
 
   return (
     <div
@@ -26,6 +51,9 @@ export default function Login() {
               className="w-[456px] h-[56px]"
               style={{ backgroundColor: "#F6F7F9" }}
               placeholder="Masukkan Username"
+              name="username"
+              value={loginData.username}
+              onChange={handleChange}
             />
           </label>
           <label className="flex flex-col gap-2 w-[456px] font-medium text-xl">
@@ -35,6 +63,9 @@ export default function Login() {
               className="w-[456px] h-[56px]"
               style={{ backgroundColor: "#F6F7F9" }}
               placeholder="Masukkan Password"
+              name="password"
+              value={loginData.password}
+              onChange={handleChange}
             />
           </label>
           <button

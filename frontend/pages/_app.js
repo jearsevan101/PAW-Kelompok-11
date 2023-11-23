@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { AuthContextProvider } from "@/utils/context/AuthContext";
 import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
@@ -7,7 +8,9 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>RentalIn</title>
       </Head>
-      <Component {...pageProps} />
+      <AuthContextProvider>
+        <Component {...pageProps} />
+      </AuthContextProvider>
     </>
   );
 }
