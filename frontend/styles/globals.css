@@ -23,7 +23,11 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  border: 3px solid #3563E9; 
-  border-radius: 8px; 
+  border: 3px solid #3563E9;
+  border-radius: 8px;
   box-sizing: border-box;
+}
+
+.toast-progress-bar {
+  background-color: #3563E9 !important;
 }
