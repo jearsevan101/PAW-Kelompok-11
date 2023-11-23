@@ -1,14 +1,13 @@
 import Cookies from "js-cookie";
+import { createContext, useEffect, useState } from "react";
 import useAxios from "../hooks/useAxios";
 import { jwtDecode } from "jwt-decode";
-import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
   const [customerInfo, setCustomerInfo] = useState(() => {
     const storedToken = Cookies.get("auth_info");
-
     if (storedToken) {
       const decodedToken = jwtDecode(storedToken);
       const tokenExpiration = new Date((decodedToken.exp ?? 0) * 1000);
@@ -21,7 +20,6 @@ export function AuthContextProvider({ children }) {
         Cookies.remove("auth_info");
       }
     }
-
     return {
       isLoggedIn: false,
       customerInfo: null,
@@ -29,8 +27,9 @@ export function AuthContextProvider({ children }) {
   });
 
   useEffect(() => {
-    if (customerInfo?.length)
+    if (customerInfo !== null && customerInfo !== undefined) {
       localStorage.setItem("customer-info", JSON.stringify(customerInfo));
+    }
   }, [customerInfo]);
 
   const loginCustomer = async (data) => {
@@ -40,7 +39,6 @@ export function AuthContextProvider({ children }) {
       if (response && response.data.token) {
         const decodedToken = jwtDecode(response.data.token);
         const tokenExpiration = new Date((decodedToken.exp ?? 0) * 1000);
-
         if (tokenExpiration > new Date()) {
           Cookies.set("auth_info", response.data.token, {
             expires: tokenExpiration,
@@ -51,7 +49,6 @@ export function AuthContextProvider({ children }) {
 
       return response;
     } catch (err) {
-      console.log("error: ", err.message);
       return null;
     }
   };

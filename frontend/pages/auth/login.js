@@ -13,6 +13,8 @@ export default function Login() {
     username: "",
     password: "",
   });
+
+  console.log("loginData", loginData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({
@@ -23,16 +25,18 @@ export default function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    console.log("test");
     try {
       const response = await loginCustomer(loginData);
       if (response) {
         onSuccess("Login Success");
         router.push("/");
       } else {
-        onerror("Login Failed");
+        onError("Login Failed");
       }
     } catch (err) {
       onError("error: ", err.message);
+      console.log("error: ", err.message);
     }
   };
 
@@ -41,7 +45,6 @@ export default function Login() {
       className="flex flex-col justify-center items-center min-h-screen"
       style={{ backgroundColor: "#F6F7F9" }}
     >
-      {/* Buat Riwayat Order */}
       <h1 className="text-6xl mb-1">Login</h1>
       <section className="mt-1 p-10 px-12 w-[571px] h-[402px] bg-white rounded-[12px] flex flex-col gap-4 justify-center items-center">
         <form className="flex flex-col gap-2" onSubmit={handleLogin}>
