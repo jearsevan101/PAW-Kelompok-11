@@ -14,7 +14,6 @@ export default function Login() {
     password: "",
   });
 
-  console.log("loginData", loginData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData({
