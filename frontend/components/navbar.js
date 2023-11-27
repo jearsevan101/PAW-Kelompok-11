@@ -6,20 +6,17 @@ import Searchbar from "./Searchbar";
 import Filter from "./Filter";
 import Profile from "./Profile";
 
-const Navbar = () => {
+const Navbar = ({onSearchSend}) => {
   const [userLogin, setUserLogin] = useState(true);
   const [isFilterVisible, setFilterVisible] = useState(false);
   const handleSearch = (query) => {
     // Perform search logic with the query
+    onSearchSend(query);
     console.log("Searching for:", query);
   };
-  const filterClicked =()=>{
-    if(isFilterVisible == true){
-      setFilterVisible(false);
-    }else {
-      setFilterVisible(true);
-    }
-  }
+  const handleFilterClick = () => {
+    setFilterVisible((prev) => !prev);
+  };
 
   return (
     <header
@@ -32,7 +29,7 @@ const Navbar = () => {
             <Image src="/Logo.svg" alt="Logo" width={100} height={50} />
           </Link>
           <div className="ml-20">
-            <Searchbar onSearch={handleSearch} filterClick={filterClicked} />
+            <Searchbar onSearch={handleSearch} onFilterClick={handleFilterClick} />
           </div>
         </div>
         

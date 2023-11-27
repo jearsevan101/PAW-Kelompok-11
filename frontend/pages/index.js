@@ -8,28 +8,46 @@ import CarCard from "@/components/CarCard";
 import Loading from "@/components/Loading";
 import Footer from "@/components/footer";
 import Profile from "@/components/Profile";
-export default function Home() {
-  const [kendaraanList, setKendaraanList] = useState([]);
-  const [loading, setLoading] = useState(true); 
 
+export default function Home() {
+  // const [kendaraanList, setKendaraanList] = useState([]);
+  const [loading, setLoading] = useState(true); 
+  const [kendaraanListSearch, setkendaraanListSearch] = useState([]);
+  const [name, setName] = useState('');
+  // useEffect(() => {
+  //   const apiUrl = "https://paw-kelompok-11-server.vercel.app/api/kendaraan";
+
+  //   axios
+  //     .get(apiUrl)
+  //     .then((response) => {
+  //       setKendaraanList(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //       setLoading(false);
+  //     });
+  // }, []);
   useEffect(() => {
-    const apiUrl = "https://paw-kelompok-11-server.vercel.app/api/kendaraan";
+    const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}`;
 
     axios
       .get(apiUrl)
       .then((response) => {
-        setKendaraanList(response.data);
+        setkendaraanListSearch(response.data);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
-  }, []);
-
+  }, [name]);
+  const handleNameChange = (query) => {
+    setName(query);
+  };
   return (
     <>
-      <Navbar/>
+      <Navbar onSearchSend={handleNameChange}/>
       <Profile/>
       <div className="container min-h-screen mx-auto pt-20">
         {loading ? (
@@ -67,7 +85,7 @@ export default function Home() {
             <div id="CarList" className="mt-10">
               <span className="text-c-text-grey font-semibold">Cars List</span>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
-                {kendaraanList.map((kendaraan, index) => (
+                {kendaraanListSearch.map((kendaraan, index) => (
                   <CarCard key={index} data={kendaraan} />
                 ))}
               </div>

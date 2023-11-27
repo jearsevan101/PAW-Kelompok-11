@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-const Searchbar = ({ onSearch, filterClick }) => {
+
+const Searchbar = ({ onSearch, onFilterClick }) => {
   const [query, setQuery] = useState('');
 
   const handleInputChange = (event) => {
@@ -11,7 +12,7 @@ const Searchbar = ({ onSearch, filterClick }) => {
     onSearch(query);
   };
   const handleFilter = () =>{
-    filterClick();
+    onFilterClick();
   } 
 
   return (
