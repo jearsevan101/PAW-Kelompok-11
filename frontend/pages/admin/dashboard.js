@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Button from 'components/Button';
+import SideButton from 'components/SideButton';
 import Searchbar from 'components/Searchbar';
+import SideBar from 'components/SideBar';
 
 const Navbar = () => {
   const handleSearch = (query) => {
     // Perform search logic with the query
     console.log('Searching for:', query);
-  };
-
+  }
   return (
     <header className="w-full absolute z-10 bg-white shadow-md" style={{ height: '80px' }}>
       <nav className="max-w-[1440px] mx-auto flex justify-between items-center sm:px-4 px-6 py-4">
@@ -30,34 +30,7 @@ const HFDashboardAdminCarRent = () => {
   return (
     <div className="relative w-full h-[1024px] text-left text-xs text-secondary-500 font-medium-type14">
       <div className="absolute top-[124px] left-[0px] bg-whitesmoke-100 w-[1440px] h-[900px] overflow-hidden">
-        <div className="absolute top-[0px] left-[0px] bg-primary-0 box-border w-[286px] h-[900px] overflow-hidden text-justify text-lightsteelblue-100 border-r-[1px] border-solid border-whitesmoke-200">
-          <div className="absolute top-[80px] left-[16px] rounded-3xs bg-primary-500 w-[254px] h-14" />
-          <div className="absolute top-[36px] left-[32px] flex flex-col items-start justify-start">
-            <div className="flex flex-col items-start justify-start gap-[42px]">
-              <div className="relative tracking-[-0.02em] font-semibold flex items-center w-[88px] h-4 shrink-0">
-                M A I N M E N U
-              </div>
-              <div className="flex flex-col items-start justify-start gap-[32px] text-base text-secondary-300">
-                <div className="flex flex-row items-center justify-start gap-[12px] text-primary-0">
-                <Link href="./dashboard">
-                    <Button>Dashboard</Button>
-                </Link>
-                </div>
-                <Link href="./add-car">
-                  <Button>Add Car</Button>
-                </Link>
-                <Link href="./list-car">
-                  <Button>Car List</Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="absolute top-[824px] left-[32px] flex flex-row items-center justify-start gap-[12px] text-base text-secondary-300">
-            <div className="relative tracking-[-0.02em] leading-[150%] font-medium flex items-center w-[68px] h-7 shrink-0">
-              Log Out
-            </div>
-          </div>
-        </div>
+        <SideBar />
         <div className="absolute top-[32px] left-[318px] rounded-3xs bg-primary-0 w-[534px] h-[836px] overflow-hidden text-base">
           <b className="absolute top-[24px] left-[24px] text-xl tracking-[-0.03em] leading-[150%] flex items-center w-48 h-6">
             Details Rental
@@ -136,7 +109,7 @@ const HFDashboardAdminCarRent = () => {
           </div>
           <div className="absolute h-[6.22%] top-[89.23%] bottom-[4.55%] left-[calc(50%_+_83px)] rounded bg-primary-500 w-[146px] flex flex-row items-center justify-center py-[13px] px-6 box-border text-center text-primary-0">
             <Link href="orders/order-list">
-              <Button>Apply</Button>
+              <SideButton>Apply</SideButton>
             </Link>
           </div>
         </div>
