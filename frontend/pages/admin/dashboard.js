@@ -1,340 +1,60 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import SideButton from 'components/SideButton';
-import Searchbar from 'components/Searchbar';
 import SideBar from 'components/SideBar';
+import Navbar from "@/components/navbar";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const Navbar = () => {
-  const handleSearch = (query) => {
-    // Perform search logic with the query
-    console.log('Searching for:', query);
-  }
-  return (
-    <header className="w-full absolute z-10 bg-white shadow-md" style={{ height: '80px' }}>
-      <nav className="max-w-[1440px] mx-auto flex justify-between items-center sm:px-4 px-6 py-4">
-        <div className="flex items-center">
-          <Link href="/" className="flex justify-center items-center">
-            <Image src="/Logo.svg" alt="Logo" width={100} height={50} />
-          </Link>
-          <div className="ml-20">
-            <Searchbar onSearch={handleSearch} />
-          </div>
-        </div>
-        <Image src="/Notification.png" alt="Logo" width={40} height={40} />
-      </nav>
-    </header>
-  );
-};
+export default function Dashboard() {
+  const [sewaList, setSewaList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const HFDashboardAdminCarRent = () => {
+  useEffect(() => {
+    axios
+      .get("https://paw-kelompok-11-server.vercel.app/api/sewa/")
+      .then((response) => {
+        setSewaList(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleNameChange = (query) => {
+    setName(query);
+  };
   return (
-    <div className="relative w-full h-[1024px] text-left text-xs text-secondary-500 font-medium-type14">
-      <div className="absolute top-[124px] left-[0px] bg-whitesmoke-100 w-[1440px] h-[900px] overflow-hidden">
-        <SideBar />
-        <div className="absolute top-[32px] left-[318px] rounded-3xs bg-primary-0 w-[534px] h-[836px] overflow-hidden text-base">
-          <b className="absolute top-[24px] left-[24px] text-xl tracking-[-0.03em] leading-[150%] flex items-center w-48 h-6">
+    <>  
+    <Navbar onSearchSend={handleNameChange}/>
+    <main className="container min-h-screen pt-20 bg-[#F6F7F9] flex flex-col sm:flex-row justify-between px-4 sm:px-0">
+      <div className="object-cover relative w-full sm:w-[250px] p-8 h-screen overflow-hidden bg-[#FFFFFF]">
+          <SideBar/> 
+      </div>
+      <div className="object-cover relative w-full sm:w-[600px] p-8 h-[screen] rounded-xl overflow-hidden bg-[#FFFFFF] ml-[24px] mb-[36px] mt-[36px]">
+          <h2 className="font-bold text-[20px]">
             Details Rental
-          </b>
-          <div className="absolute top-[75px] left-[172px] flex flex-col items-start justify-start gap-[8px] text-5xl">
-          </div>
-          <div className="absolute top-[287px] left-[24px] flex flex-row items-center justify-start gap-[8px]">
-            <div className="rounded-51xl bg-royalblue flex flex-row items-center justify-center p-1">
-              <div className="relative rounded-[50%] bg-primary-500 w-2 h-2" />
-            </div>
-            <div className="relative tracking-[-0.02em] leading-[150%] font-semibold flex items-center w-[68px] h-5 shrink-0">
-              Pick - Up
-            </div>
-          </div>
-          <div className="absolute top-[327px] left-[24px] flex flex-row items-start justify-start gap-[24px]">
-            <div className="relative box-border w-px h-[49px] border-r-[1px] border-solid border-lightsteelblue-200" />
-            <div className="flex flex-col items-start justify-start gap-[8px]">
-              <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-12 h-5 shrink-0">
-                Date
-              </b>
-              <div className="flex flex-row items-center justify-start gap-[8px] text-xs text-secondary-300">
-                <div className="relative tracking-[-0.02em] font-medium flex items-center w-28 h-5 shrink-0">
-                  20 July 2022
-                </div>
-              </div>
-            </div>
-            <div className="relative box-border w-px h-[49px] border-r-[1px] border-solid border-lightsteelblue-200" />
-          </div>
-          <div className="absolute top-[407px] left-[24px] flex flex-row items-center justify-start gap-[8px]">
-            <div className="rounded-51xl bg-cornflowerblue flex flex-row items-center justify-center p-1">
-              <div className="relative rounded-[50%] bg-information-500 w-2 h-2" />
-            </div>
-            <div className="relative tracking-[-0.02em] leading-[150%] font-semibold flex items-center w-20 h-5 shrink-0">
-              Drop - Off
-            </div>
-          </div>
-          <div className="absolute top-[447px] left-[24px] flex flex-row items-start justify-start gap-[24px]">
-            <div className="relative box-border w-px h-[49px] border-r-[1px] border-solid border-lightsteelblue-200" />
-            <div className="flex flex-col items-start justify-start gap-[8px]">
-              <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-12 h-5 shrink-0">
-                Date
-              </b>
-              <div className="flex flex-row items-center justify-start gap-[8px] text-xs text-secondary-300">
-                <div className="relative tracking-[-0.02em] font-medium flex items-center w-28 h-5 shrink-0">
-                  21 July 2022
-                </div>
-              </div>
-            </div>
-            <div className="relative box-border w-px h-[49px] border-r-[1px] border-solid border-lightsteelblue-200" />
-          </div>
-          <div className="absolute top-[534.5px] left-[23.5px] box-border w-[487px] h-px border-t-[1px] border-solid border-lightsteelblue-200" />
-          <div className="absolute top-[272.5px] left-[23.5px] box-border w-[487px] h-px border-t-[1px] border-solid border-lightsteelblue-200" />
-          <div className="absolute top-[571px] left-[24px] flex flex-row items-start justify-start gap-[74px] text-xl">
-            <div className="w-[284px] flex flex-col items-start justify-start gap-[4px]">
-              <b className="relative tracking-[-0.03em] leading-[150%] flex items-center w-[200px] h-6 shrink-0">
-                Total Rental Price
-              </b>
-              <div className="relative text-sm tracking-[-0.02em] leading-[150%] font-medium text-secondary-300 flex items-center w-[284px] h-5 shrink-0">
-                Overall price and includes rental discount
-              </div>
-            </div>
-            <b className="relative text-13xl flex text-right items-center w-32 h-12 shrink-0">
-              $80.00
-            </b>
-          </div>
-          <div className="absolute top-[158px] left-[26px] tracking-[-0.02em] leading-[150%] whitespace-pre-wrap flex items-center w-[241px] h-[102px]">
-            <span className="[line-break:anywhere] w-full">
-              <p className="m-0 font-semibold">{`Nama : `}</p>
-              <p className="m-0 font-semibold">{`Email   : `}</p>
-            </span>
-          </div>
-          <div className="absolute top-[706px] left-[356px] flex flex-row items-center justify-start gap-[8px] text-xs text-secondary-300">
-            <div className="relative tracking-[-0.02em] font-medium flex items-center w-28 h-5 shrink-0">
-              CONFIRM
-            </div>
-          </div>
-          <div className="absolute h-[6.22%] top-[89.23%] bottom-[4.55%] left-[calc(50%_+_83px)] rounded bg-primary-500 w-[146px] flex flex-row items-center justify-center py-[13px] px-6 box-border text-center text-primary-0">
-            <Link href="orders/order-list">
-              <SideButton>Apply</SideButton>
-            </Link>
-          </div>
-        </div>
-        <div className="absolute top-[32px] left-[884px] rounded-3xs bg-primary-0 w-[524px] h-[832px] overflow-hidden text-xl">
-          <div className="absolute top-[24px] left-[24px] flex flex-row items-start justify-start gap-[216px]">
-            <b className="relative tracking-[-0.03em] leading-[150%] flex items-center w-48 h-6 shrink-0">
-              Recent Transaction
-            </b>
-            <div className="relative text-xs leading-[200%] font-medium text-primary-500 text-right flex items-center w-[68px] h-6 shrink-0">
-              View All
-            </div>
-          </div>
-          <div className="absolute top-[80px] left-[24px] flex flex-col items-start justify-start gap-[16px] text-base">
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  Nissan GT - R
-                </b>
-                <div className="rounded bg-warning-300 w-[120px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-warning-900">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Rented
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    20 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $80.00
-                </b>
-              </div>
-            </div>
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  Nissan GT - R
-                </b>
-                <div className="rounded bg-warning-300 w-[120px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-warning-900">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Returned
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    20 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $80.00
-                </b>
-              </div>
-            </div>
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  Nissan GT - R
-                </b>
-                <div className="rounded bg-warning-300 w-[120px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-warning-900">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Returned
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    20 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $80.00
-                </b>
-              </div>
-            </div>
-            <div className="relative box-border w-[477px] h-px border-t-[1px] border-solid border-lightsteelblue-200" />
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  Koegnigsegg
-                </b>
-                <div className="rounded bg-error-300 w-[103px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-error-800">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Rejected
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    19 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $99.00
-                </b>
-              </div>
-            </div>
-            <div className="relative box-border w-[477px] h-px border-t-[1px] border-solid border-lightsteelblue-200" />
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  Rolls - Royce
-                </b>
-                <div className="rounded bg-success-400 w-[103px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-success-800">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Returned
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    18 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $96.00
-                </b>
-              </div>
-            </div>
-            <div className="relative box-border w-[477px] h-px border-t-[1px] border-solid border-lightsteelblue-200" />
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  CR - V
-                </b>
-                <div className="rounded bg-information-400 w-[103px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-information-800">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Rented
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    17 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $80.00
-                </b>
-              </div>
-            </div>
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  Koegnigsegg
-                </b>
-                <div className="rounded bg-error-300 w-[103px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-error-800">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Rejected
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    19 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $99.00
-                </b>
-              </div>
-            </div>
-            <div className="relative w-[476px] h-[70px]">
-              <div className="absolute top-[0px] left-[0px] rounded-lg w-[132px] h-[70px] overflow-hidden">
-              </div>
-              <div className="absolute top-[11px] left-[148px] flex flex-col items-start justify-start gap-[8px]">
-                <b className="relative tracking-[-0.02em] leading-[150%] flex items-center w-[108px] h-5 shrink-0">
-                  CR - V
-                </b>
-                <div className="rounded bg-information-400 w-[103px] h-[23px] flex flex-row items-center justify-center py-[9px] px-2.5 box-border text-center text-3xs text-information-800">
-                  <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                    Rented
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-[11px] left-[368px] flex flex-col items-start justify-start gap-[8px] text-right text-xs text-secondary-300">
-                <div className="flex flex-row items-center justify-start">
-                  <div className="relative tracking-[-0.02em] font-medium flex items-center w-[108px] h-5 shrink-0">
-                    17 July
-                  </div>
-                </div>
-                <b className="relative text-base tracking-[-0.02em] leading-[150%] flex text-secondary-500 items-center w-[108px] h-5 shrink-0">
-                  $80.00
-                </b>
-              </div>
-            </div>
-          </div>
-        </div>
+          </h2>
       </div>
-      <div className="absolute top-[40px] left-[1362px] flex flex-row items-start justify-start text-center text-base text-primary-0">
-        <div className="flex flex-row items-center justify-center gap-[20px]">
-          <div className="relative w-[104px] h-11 hidden">
-            <div className="absolute top-[calc(50%_-_22px)] left-[calc(50%_-_52px)] rounded bg-primary-500 w-[104px] flex flex-row items-center justify-center py-[9px] px-4 box-border">
-              <div className="relative tracking-[-0.02em] leading-[160%] font-semibold">
-                Login
+      <div className="object-cover relative w-full sm:w-[600px] p-8 h-[screen] rounded-xl overflow-hidden bg-[#FFFFFF] ml-[24px] mb-[36px] mt-[36px] mr-[20px]">
+          <h2 className="font-bold text-[20px]">
+            Recent Transcation
+          </h2>
+            {sewaList.map(sewa => (
+              <div key={sewa._id}>
+                <p>Kendaraan ID: {sewa.kendaraan_id}</p>
+                <p>Customer ID: {sewa.customer_id}</p>
+                <p>Tanggal Sewa: {sewa.tanggal_sewa}</p>
+                <p>Tanggal Kembali: {sewa.tanggal_kembali}</p>
+                <p>Total Harga: {sewa.total_harga}</p>
+                <p>Status: {sewa.status}</p>
+                <p>__v: {sewa.__v}</p>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </div>
-      <Navbar/>
-    </div>
+    </main>
+    </>
   );
 };
-
-export default HFDashboardAdminCarRent;
