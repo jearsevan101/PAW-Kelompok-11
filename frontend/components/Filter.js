@@ -7,6 +7,7 @@ const Filter =({onApplyFilters}) =>{
     const [price, setPrice] = useState(3000000);
     const [capacity, setCapacity] = useState(6);
     const [type, setType] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
     const [cities, setCities] = useState([]); // State to store the list of cities
 
     useEffect(() => {
@@ -28,6 +29,10 @@ const Filter =({onApplyFilters}) =>{
         setPrice(event.target.value);
         console.log("price change" + event.target.value)
     }
+    const handleCityChange = (event) => {
+        setSelectedCity(event.target.value);
+        console.log("Selected city:", event.target.value);
+      };
     const handleTypeChange = (event) =>{
         const {id, checked} = event.target;
         if(checked){
@@ -50,8 +55,8 @@ const Filter =({onApplyFilters}) =>{
     };
 
     const handleApplyFilters = () => {
-        console.log("Applying filters:", { price, capacity, type });
-        onApplyFilters(price,capacity,type);
+        console.log("Applying filters:", { price, capacity, type ,selectedCity});
+        onApplyFilters(price,capacity,type,selectedCity);
     };
     
     return (
@@ -61,7 +66,8 @@ const Filter =({onApplyFilters}) =>{
                     <label>CITY</label>
                 </div>
                 <div className="flex items-center space-x-4 col-span-2">
-                    <select id="city" className="border rounded px-2 py-1">
+                    <select id="city" className="border rounded px-2 py-1" onChange={handleCityChange} value={selectedCity}>
+                        <option value="">All</option>
                         {cities.map((city) => (
                             <option key={city} value={city}>
                                 {city}

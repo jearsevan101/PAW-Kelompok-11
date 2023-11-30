@@ -14,6 +14,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true); 
   const [kendaraanListSearch, setkendaraanListSearch] = useState([]);
   const [name, setName] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
   const [price, setPrice] = useState(3000000);
   const [capacity, setCapacity] = useState(null);
   const [type, setType] = useState('');
@@ -32,7 +33,7 @@ export default function Home() {
   //     });
   // }, []);
   useEffect(() => {
-    const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}&sort=asc&hargaBelow=${price|| ''}&capacity=${capacity|| ''}&type=${type|| ''}`;
+    const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}&sort=asc&hargaBelow=${price|| ''}&capacity=${capacity|| ''}&type=${type|| ''}&kota=${selectedCity|| ''}`;
     console.log("API URL:", apiUrl);
     axios
       .get(apiUrl)
@@ -44,14 +45,15 @@ export default function Home() {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
-  }, [name, price, capacity, type]);
+  }, [name, price, capacity, type, selectedCity]);
   const handleNameChange = (query) => {
     setName(query);
   };
-  const handleFiltersChange = (price, capacity, type) => {
+  const handleFiltersChange = (price, capacity, type, selectedCity) => {
     setCapacity(capacity);
-    setPrice(price)
+    setPrice(price);
     setType(type);
+    setSelectedCity(selectedCity);
     console.log("handleFilterChange price", price);
     console.log("handleFilterChange capacity", capacity);
     console.log("handleFilterChange type", type);

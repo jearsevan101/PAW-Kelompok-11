@@ -17,9 +17,9 @@ const Navbar = ({onSearchSend,onFilterSend}) => {
   const handleFilterClick = () => {
     setFilterVisible((prev) => !prev);
   };
-  const handleApplyFilters = (price,capacity,type) => {
-    console.log("Filters applied in Navbar:", { price, capacity, type });
-    onFilterSend(price, capacity, type)
+  const handleApplyFilters = (price,capacity,type,selectedCity) => {
+    console.log("Filters applied in Navbar:", { price, capacity, type,selectedCity });
+    onFilterSend(price, capacity, type,selectedCity)
   };
   return (
     <header
