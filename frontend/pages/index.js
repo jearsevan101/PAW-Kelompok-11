@@ -14,6 +14,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true); 
   const [kendaraanListSearch, setkendaraanListSearch] = useState([]);
   const [name, setName] = useState('');
+  const [price, setPrice] = useState(3000000);
+  const [capacity, setCapacity] = useState(null);
+  const [type, setType] = useState('');
   // useEffect(() => {
   //   const apiUrl = "https://paw-kelompok-11-server.vercel.app/api/kendaraan";
 
@@ -29,8 +32,8 @@ export default function Home() {
   //     });
   // }, []);
   useEffect(() => {
-    const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}`;
-
+    const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}&sort=asc&hargaBelow=${price|| ''}&capacity=${capacity|| ''}&type=${type|| ''}`;
+    console.log("API URL:", apiUrl);
     axios
       .get(apiUrl)
       .then((response) => {
@@ -41,13 +44,21 @@ export default function Home() {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
-  }, [name]);
+  }, [name, price, capacity, type]);
   const handleNameChange = (query) => {
     setName(query);
   };
+  const handleFiltersChange = (price, capacity, type) => {
+    setCapacity(capacity);
+    setPrice(price)
+    setType(type);
+    console.log("handleFilterChange price", price);
+    console.log("handleFilterChange capacity", capacity);
+    console.log("handleFilterChange type", type);
+  };
   return (
     <>
-      <Navbar onSearchSend={handleNameChange}/>
+      <Navbar onSearchSend={handleNameChange} onFilterSend={handleFiltersChange}/>
       <Profile/>
       <div className="container min-h-screen mx-auto pt-20">
         {loading ? (

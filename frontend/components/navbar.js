@@ -6,7 +6,7 @@ import Searchbar from "./Searchbar";
 import Filter from "./Filter";
 import Profile from "./Profile";
 
-const Navbar = ({onSearchSend}) => {
+const Navbar = ({onSearchSend,onFilterSend}) => {
   const [userLogin, setUserLogin] = useState(true);
   const [isFilterVisible, setFilterVisible] = useState(false);
   const handleSearch = (query) => {
@@ -17,7 +17,10 @@ const Navbar = ({onSearchSend}) => {
   const handleFilterClick = () => {
     setFilterVisible((prev) => !prev);
   };
-
+  const handleApplyFilters = (price,capacity,type) => {
+    console.log("Filters applied in Navbar:", { price, capacity, type });
+    onFilterSend(price, capacity, type)
+  };
   return (
     <header
       className="w-full absolute z-10 bg-white shadow-md"
@@ -41,7 +44,7 @@ const Navbar = ({onSearchSend}) => {
           </Link>  
         )}
       </nav>
-      {isFilterVisible && <Filter/>}
+      {isFilterVisible && <Filter onApplyFilters={handleApplyFilters}/>}
     </header>
   );
 };

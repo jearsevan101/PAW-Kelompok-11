@@ -3,17 +3,19 @@ import Image from "next/image";
 import Button from "./Button";
 import React, { useState } from 'react';
 
-const Filter =() =>{
-    const [price, setPrice] = useState (10000);
+const Filter =({onApplyFilters}) =>{
+    const [price, setPrice] = useState(3000000);
+    const [capacity, setCapacity] = useState(6);
+    const [type, setType] = useState('');
     const handlePriceChange = (event) =>{
         setPrice(event.target.value);
+        console.log("price change" + event.target.value)
     }
-    const [capacity, setCapacity] = useState(0);
-    const [type, setType] = useState();
     const handleTypeChange = (event) =>{
         const {id, checked} = event.target;
         if(checked){
             setType(id);
+            console.log("type change" + id)
         }else {
             setType();
         }
@@ -22,15 +24,17 @@ const Filter =() =>{
         const { id, checked } = event.target;
         // Ensure only one checkbox is checked at a time
         if (checked) {
-        setCapacity(parseInt(id, 10));
+            setCapacity(parseInt(id, 10));
+            console.log("capacity change" + parseInt(id, 10))
         } else {
-        // If unchecked, set capacity to 0
-        setCapacity(0);
+            // If unchecked, set capacity to 0
+            setCapacity(0);
         }
     };
 
     const handleApplyFilters = () => {
-        console.log("Filters applied!");
+        console.log("Applying filters:", { price, capacity, type });
+        onApplyFilters(price,capacity,type);
       };
     
       return (
@@ -82,10 +86,10 @@ const Filter =() =>{
                     <label htmlFor="8">8 Person</label>
                 </div>
                 <div className="flex items-center space-x-4 ">
-                    <input type="checkbox" id="automatic" checked={type === "automatic"}
+                    <input type="checkbox" id="Auto" checked={type === "Auto"}
                         onChange={handleTypeChange} />
                     <label htmlFor="automatic">Automatic</label>
-                    <input type="checkbox" id="manual" checked={type === "manual"}
+                    <input type="checkbox" id="Manual" checked={type === "Manual"}
                         onChange={handleTypeChange}/>
                     <label htmlFor="manual">Manual</label>
                 </div>
@@ -108,7 +112,9 @@ const Filter =() =>{
                     <label>Rp {price}</label>
                 </div>
                 <div className="text-right mr-5">
-                    <Button children={"Apply Filter"} onClick={handleApplyFilters}/>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleApplyFilters}>
+                    Apply Filter
+                    </button>
                 </div>
             </div>
             
