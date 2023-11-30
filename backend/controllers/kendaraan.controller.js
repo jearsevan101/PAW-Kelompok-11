@@ -94,7 +94,7 @@ const readAllKendaraan = async (req, res) => {
       filterOptions.harga = { $lt: parseInt(hargaBelow) };
     }
 
-    if (type && ["AUTO", "MANUAL"].includes(type.toUpperCase())) {
+    if (type && ["Auto", "Manual"].includes(type.toUpperCase())) {
       filterOptions.type = type.toUpperCase();
     }
 
