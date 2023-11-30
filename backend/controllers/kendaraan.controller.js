@@ -112,7 +112,7 @@ const readKotaWithKendaraan = async (req,res) => {
       // Aggregate query to get unique "kota" values
       const result = await Kendaraan.aggregate([
         { $group: { _id: '$kota' } },
-        { $project: { _id: 0, kota: '$_id' } },
+        { $project: { kota: '$_id', _id: 0} },
       ]);
   
       const kotaWithKendaraan = result.map(entry => entry.kota);

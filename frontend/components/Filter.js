@@ -1,12 +1,29 @@
 import Link from "next/link";
 import Image from "next/image";
 import Button from "./Button";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Filter =({onApplyFilters}) =>{
     const [price, setPrice] = useState(3000000);
     const [capacity, setCapacity] = useState(6);
     const [type, setType] = useState('');
+    const [cities, setCities] = useState([]); // State to store the list of cities
+
+    useEffect(() => {
+        // Fetch cities from the backend when the component mounts
+        const fetchCities = async () => {
+        try {
+            // Replace this URL with the correct URL to fetch cities from your backend
+            const response = await fetch('https://paw-kelompok-11-server.vercel.app/api/kendaraan/kota');
+            const data = await response.json();
+            setCities(data.kota);
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+        }
+        };
+
+        fetchCities();
+    }, []);
     const handlePriceChange = (event) =>{
         setPrice(event.target.value);
         console.log("price change" + event.target.value)
@@ -35,9 +52,9 @@ const Filter =({onApplyFilters}) =>{
     const handleApplyFilters = () => {
         console.log("Applying filters:", { price, capacity, type });
         onApplyFilters(price,capacity,type);
-      };
+    };
     
-      return (
+    return (
         <div className="w-full mx-auto bg-slate-50 py-8 px-4 sm:px-10 shadow-md">
             <div className="container mx-auto grid sm:grid-cols-2 gap-2">
                 <div className="text-sm font-semibold opacity-70">
@@ -45,8 +62,11 @@ const Filter =({onApplyFilters}) =>{
                 </div>
                 <div className="flex items-center space-x-4 col-span-2">
                     <select id="city" className="border rounded px-2 py-1">
-                        <option value="city1">City 1</option>
-                        <option value="city2">City 2</option>
+                        {cities.map((city) => (
+                            <option key={city} value={city}>
+                                {city}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="text-sm font-semibold opacity-70">
@@ -119,6 +139,6 @@ const Filter =({onApplyFilters}) =>{
             </div>
             
         </div>
-      )
+    )
 };
 export default Filter;
