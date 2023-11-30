@@ -1,5 +1,5 @@
 const express = require("express");
-const { createKendaraan, readAllKendaraan, readKendaraanById, updateKendaraanById, deleteKendaraan } = require("../controllers/kendaraan.controller");
+const { createKendaraan, readAllKendaraan, readKendaraanById, updateKendaraanById, deleteKendaraan , readKotaWithKendaraan } = require("../controllers/kendaraan.controller");
 
 const router = express.Router();
 
@@ -18,5 +18,7 @@ router.put("/:id", updateKendaraanById);
 //DELETE API - delete kendaraan by ID
 router.delete("/:id", deleteKendaraan);
 
+//GET API - Kota in kendaraan
+router.get("/kota", readKotaWithKendaraan);
 
 module.exports = router;

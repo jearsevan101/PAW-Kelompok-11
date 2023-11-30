@@ -105,7 +105,30 @@ const readAllKendaraan = async (req, res) => {
   }
 };
 
-
+// Get all kota with kendaraan 
+const readKotaWithKendaraan = async (req,res) => {
+  const getKotaWithKendaraan = async () => {
+    try {
+      // Aggregate query to get unique "kota" values
+      const result = await Kendaraan.aggregate([
+        { $group: { _id: '$kota' } },
+        { $project: { _id: 0, kota: '$_id' } },
+      ]);
+  
+      const kotaWithKendaraan = result.map(entry => entry.kota);
+      return kotaWithKendaraan;
+    } catch (error) {
+      throw error;
+    }
+  };
+  try {
+    const kotaWithKendaraan = await getKotaWithKendaraan();
+    res.json({ kota: kotaWithKendaraan });
+  } catch (error) {
+    console.error('Error fetching Kota with Kendaraan data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
 
 // Read a specific kendaraan by ID
 const readKendaraanById = async (req, res) => {
@@ -178,4 +201,5 @@ module.exports = {
   readKendaraanById,
   updateKendaraanById,
   deleteKendaraan,
+  readKotaWithKendaraan,
 };
