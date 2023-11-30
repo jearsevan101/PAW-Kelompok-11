@@ -90,7 +90,7 @@ const Filter =() =>{
                     <label htmlFor="manual">Manual</label>
                 </div>
                 <div className="col-span-2 text-sm font-semibold opacity-70">
-                    <label>PRICE</label>
+                    <label>MAX PRICE</label>
                 </div>
                 <div className="flex items-center space-x-4 col-span-2 text-right">
                     <input

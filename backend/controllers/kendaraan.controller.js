@@ -34,19 +34,47 @@ const createKendaraan = async (req, res) => {
 };
 
 // Read all kendaraan with sorting, filtering by kota, and searching by name
+// const readAllKendaraan = async (req, res) => {
+//   try {
+
+//     const { sort, kota = "", search = "" } = req.query;
+
+//     let sortOptions = {};
+//     let filterOptions = {};
+
+//     if (sort === "asc") {
+//       sortOptions = { harga: 1 };
+//     }
+
+//     else if (sort === "desc") {
+//       sortOptions = { harga: -1 };
+//     }
+
+//     if (kota && Regencies.includes(kota.toUpperCase())) {
+//       filterOptions.kota = kota.toUpperCase();
+//     }
+
+//     if (search) {
+//       filterOptions.nama = { $regex: search, $options: "i" }; // Case-insensitive search
+//     }
+
+//     // Find and sort the kendaraan using the sort options, filter by 'kota', and search by 'nama'
+//     const kendaraanList = await Kendaraan.find(filterOptions).sort(sortOptions);
+//     res.status(200).json(kendaraanList);
+//   } catch (err) {
+//     res.status(400).json({ error: err.message });
+//   }
+// };
 const readAllKendaraan = async (req, res) => {
   try {
-
-    const { sort, kota = "", search = "" } = req.query;
+    const { sort, kota = "", search = "", capacity, hargaBelow, type } = req.query;
 
     let sortOptions = {};
     let filterOptions = {};
 
     if (sort === "asc") {
       sortOptions = { harga: 1 };
-    }
-
-    else if (sort === "desc") {
+    } else if (sort === "desc") {
       sortOptions = { harga: -1 };
     }
 
@@ -55,16 +83,28 @@ const readAllKendaraan = async (req, res) => {
     }
 
     if (search) {
-      filterOptions.nama = { $regex: search, $options: "i" }; // Case-insensitive search
+      filterOptions.nama = { $regex: search, $options: "i" };
     }
 
-    // Find and sort the kendaraan using the sort options, filter by 'kota', and search by 'nama'
+    if (capacity) {
+      filterOptions.capacity = parseInt(capacity);
+    }
+
+    if (hargaBelow) {
+      filterOptions.harga = { $lt: parseInt(hargaBelow) };
+    }
+
+    if (type && ["AUTO", "MANUAL"].includes(type.toUpperCase())) {
+      filterOptions.type = type.toUpperCase();
+    }
+
     const kendaraanList = await Kendaraan.find(filterOptions).sort(sortOptions);
     res.status(200).json(kendaraanList);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 
 // Read a specific kendaraan by ID

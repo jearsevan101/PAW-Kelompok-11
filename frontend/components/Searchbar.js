@@ -11,6 +11,11 @@ const Searchbar = ({ onSearch, onFilterClick }) => {
   const handleSearch = () => {
     onSearch(query);
   };
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
   const handleFilter = () =>{
     onFilterClick();
   } 
@@ -28,6 +33,7 @@ const Searchbar = ({ onSearch, onFilterClick }) => {
         placeholder="Search..."
         value={query}
         onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
         className="flex-1 px-3 py-2 border-none outline-none"
       />
       <img
