@@ -109,13 +109,13 @@ const readAllKendaraan = async (req, res) => {
 const readKotaWithKendaraan = async (req,res) => {
   const getKotaWithKendaraan = async () => {
     try {
-      // Aggregate query to get unique "kota" values
+      // Use $toUpper to make the comparison case-insensitive
       const result = await Kendaraan.aggregate([
-        { $group: { _id: '$kota' } },
-        { $project: { kota: '$_id', _id: 0} },
+        { $group: { _id: { $toUpper: '$kota' } } },
+        { $project: { kota: '$_id', _id: 0 } },
       ]);
   
-      const kotaWithKendaraan = result.map(entry => entry.kota);
+      const kotaWithKendaraan = result.map((entry) => entry.kota);
       return kotaWithKendaraan;
     } catch (error) {
       throw error;

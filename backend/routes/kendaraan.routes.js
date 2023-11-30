@@ -9,6 +9,9 @@ router.post("/", createKendaraan);
 // GET API - Read all kendaraan
 router.get("/", readAllKendaraan);
 
+//GET API - Kota in kendaraan
+router.get("/kota", readKotaWithKendaraan);
+
 // GET API - Read a kendaraan by ID
 router.get("/:id", readKendaraanById);
 
@@ -18,7 +21,6 @@ router.put("/:id", updateKendaraanById);
 //DELETE API - delete kendaraan by ID
 router.delete("/:id", deleteKendaraan);
 
-//GET API - Kota in kendaraan
-router.get("/kota", readKotaWithKendaraan);
+
 
 module.exports = router;
