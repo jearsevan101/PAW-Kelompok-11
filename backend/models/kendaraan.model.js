@@ -33,8 +33,8 @@ const vehicleSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["AUTO", "MANUAL"],
-    default: "MANUAL",
+    enum: ["Auto", "Manual"],
+    default: "Manual",
   },
   jumlah_tersewa: {
     type: Number,

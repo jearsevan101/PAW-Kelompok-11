@@ -47,9 +47,20 @@ export default function Home() {
       });
   }, [name, price, capacity, type, selectedCity]);
   const handleNameChange = (query) => {
+    resetFilter();
     setName(query);
   };
+  const resetFilter = () =>{
+    setCapacity(null);
+    setPrice(3000000);
+    setType('');
+    setSelectedCity('');
+  }
+  const resetSearch = () =>{
+    setName('');
+  }
   const handleFiltersChange = (price, capacity, type, selectedCity) => {
+    resetSearch();
     setCapacity(capacity);
     setPrice(price);
     setType(type);

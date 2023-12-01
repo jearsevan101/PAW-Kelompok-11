@@ -94,8 +94,8 @@ const readAllKendaraan = async (req, res) => {
       filterOptions.harga = { $lt: parseInt(hargaBelow) };
     }
 
-    if (type && ["Auto", "Manual"].includes(type.toUpperCase())) {
-      filterOptions.type = type.toUpperCase();
+    if (type && ["Auto", "Manual"].includes(type)) {
+      filterOptions.type = type;
     }
 
     const kendaraanList = await Kendaraan.find(filterOptions).sort(sortOptions);
