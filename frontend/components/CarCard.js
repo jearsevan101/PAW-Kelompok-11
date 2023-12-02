@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
-import { HiOutlineLocationMarker } from "react-icons/hi";
+import { HiOutlineLocationMarker, HiTrash } from "react-icons/hi";
 import { BsFillFuelPumpFill, BsPeopleFill } from "react-icons/bs";
 import { RiSteering2Fill } from "react-icons/ri";
 
-const CarCard = ({ data }) => {
+const CarCard = ({ data, isAdmin }) => {
   const {
     nama,
     deskripsi,
@@ -20,8 +20,18 @@ const CarCard = ({ data }) => {
 
   const formattedHarga = harga.toLocaleString("id-ID");
 
+  const handleEdit = () => {
+    // Implement your logic for editing the car
+    console.log("Edit Car:", data);
+  };
+
+  const handleDelete = () => {
+    // Implement your logic for deleting the car
+    console.log("Delete Car:", data);
+  };
+
   return (
-    <div className="bg-white rounded-xl p-6 gap-y-8 flex flex-col overflow-hidden">
+    <div className="bg-white rounded-xl shadow-[0_35px_50px_5px_rgba(0,0,0,0.05)] p-6 gap-y-8 flex flex-col overflow-hidden">
       <div className="absolute">
         {[1, 2, 3].map((index) => (
           <div
@@ -31,12 +41,19 @@ const CarCard = ({ data }) => {
         ))}
       </div>
 
-      <div>
-        <h3 className="font-bold text-c-text-dark text-xl">{nama}</h3>
-        <div className="flex text-sm items-center gap-1 flex-row text-c-text-grey">
-          <HiOutlineLocationMarker />
-          <p className="font-medium ">{kota}</p>
+      <div className="flex flex-row justify-between">
+        <div>
+          <h3 className="font-bold text-c-text-dark text-xl">{nama}</h3>
+          <div className="flex text-sm items-center gap-1 flex-row text-c-text-grey">
+            <HiOutlineLocationMarker />
+            <p className="font-medium ">{kota}</p>
+          </div>
         </div>
+        {isAdmin && (
+          <button onClick={handleDelete} className="text-lg text-c-text-grey">
+            <HiTrash />
+          </button>
+        )}
       </div>
 
       <div className="relative w-full h-[120px] mt-6">
@@ -65,9 +82,13 @@ const CarCard = ({ data }) => {
           {`Rp${formattedHarga}`}
           <span className="text-c-text-grey text-sm">/day</span>
         </p>
-        <Link href={`/car/${data._id}`}>
-          <Button>More Detail</Button>
-        </Link>
+        {isAdmin ? (
+          <Button onClick={handleEdit}>Edit</Button>
+        ) : (
+          <Link href={`/car/${data._id}`}>
+            <Button>More Detail</Button>
+          </Link>
+        )}
       </div>
     </div>
   );
