@@ -1,14 +1,27 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import Button from "./Button";
 import Searchbar from "./Searchbar";
 import Filter from "./Filter";
 import Profile from "./Profile";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = ({onSearchSend,onFilterSend}) => {
-  const [userLogin, setUserLogin] = useState(true);
+  const [userLogin, setUserLogin] = useState(false);
   const [isFilterVisible, setFilterVisible] = useState(false);
+  useEffect(() => {
+    try {
+      const jwt = jwtDecode(Cookies.get("auth_info"))
+
+      if (jwt != null) {
+        setUserLogin(true);
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }, []);
   const handleSearch = (query) => {
     // Perform search logic with the query
     onSearchSend(query);
@@ -18,7 +31,7 @@ const Navbar = ({onSearchSend,onFilterSend}) => {
     setFilterVisible((prev) => !prev);
   };
   const handleApplyFilters = (price,capacity,type,selectedCity) => {
-    console.log("Filters applied in Navbar:", { price, capacity, type,selectedCity });
+    console.log("Filters applied in Navbar:", { price, capacity, type,selectedCity }, );
     onFilterSend(price, capacity, type,selectedCity)
   };
   return (
@@ -37,7 +50,7 @@ const Navbar = ({onSearchSend,onFilterSend}) => {
         </div>
         
         {userLogin?(
-          <Profile/>
+          <Profile logOut={()=> setUserLogin(false)}/>
         ) : (
           <Link href={`/auth/login`}>
             <Button>Login</Button>
