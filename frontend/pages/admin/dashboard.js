@@ -13,6 +13,49 @@ export default function Dashboard() {
   const [selectedData, setSelectedData] = useState(null);
   const [mergedData, setMergedData] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [name, setName] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [price, setPrice] = useState(3000000);
+  const [capacity, setCapacity] = useState(null);
+  const [type, setType] = useState('');
+
+  useEffect(() => {
+    const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}&sort=asc&hargaBelow=${price|| ''}&capacity=${capacity|| ''}&type=${type|| ''}&kota=${selectedCity|| ''}`;
+    console.log("API URL:", apiUrl);
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        setkendaraanListSearch(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, [name, price, capacity, type, selectedCity]);
+  const handleNameChange = (query) => {
+    resetFilter();
+    setName(query);
+  };
+  const resetFilter = () =>{
+    setCapacity(null);
+    setPrice(3000000);
+    setType('');
+    setSelectedCity('');
+  }
+  const resetSearch = () =>{
+    setName('');
+  }
+  const handleFiltersChange = (price, capacity, type, selectedCity) => {
+    resetSearch();
+    setCapacity(capacity);
+    setPrice(price);
+    setType(type);
+    setSelectedCity(selectedCity);
+    console.log("handleFilterChange price", price);
+    console.log("handleFilterChange capacity", capacity);
+    console.log("handleFilterChange type", type);
+  };
 
   const handleStatusChange = (event, id) => {
     const newStatus = event.target.value;
@@ -91,13 +134,9 @@ export default function Dashboard() {
     }
   }, [sewaList, kendaraanList, customerList, selectedData]);
 
-  const handleNameChange = (query) => {
-    setName(query);
-  };
-
   return (
     <>
-      <Navbar onSearchSend={handleNameChange} />
+      <Navbar onSearchSend={handleNameChange} onFilterSend={handleFiltersChange}/>
       <main className="container min-h-screen pt-20 bg-[#F6F7F9] flex flex-col sm:flex-row justify-between px-4 sm:px-0">
         <div className="object-cover relative w-full sm:w-[250px] p-8 h-[screen] overflow-hidden bg-[#FFFFFF]">
           <SideBar />
@@ -152,8 +191,8 @@ export default function Dashboard() {
                     fontSize: '12px',
                     letterSpacing: '0.05em',
                     fontWeight: 'semi-bold',
-                    backgroundColor: selectedData.status === 'Ditolak' ? '#FFA37A' : selectedData.status === 'Konfirmasi' ? '#7EC2FF' : '#BCE455',
-                    color: selectedData.status === 'Ditolak' ? '#930B16' : selectedData.status === 'Konfirmasi' ? '#1A4393' : '#4C7A0B',
+                    backgroundColor: selectedData.status === 'DITOLAK' ? '#FFA37A' : selectedData.status === 'KONFIRMASI' ? '#96FDF1' : selectedData.status === 'DISEWA' ? '#7EC2FF' : selectedData.status === 'DIAJUKAN' ? '#FFE488' : '#BCE455',
+                    color: selectedData.status === 'DITOLAK' ? '#930B16' : selectedData.status === 'KONFIRMASI' ? '#357672' : selectedData.status === 'DISEWA' ? '#1A4393' : selectedData.status === 'DIAJUKAN' ? '#7A4D0B' : '#4C7A0B',
                     display: 'inline-block',
                     padding: '0.3em 2em',
                     border: 'none',
@@ -161,9 +200,11 @@ export default function Dashboard() {
                     cursor: 'pointer'
                   }}
                 >
-                  <option value="Konfirmasi" style={{backgroundColor: '#FFFFFF'}}>Konfirmasi</option>
-                  <option value="Diajukan" style={{backgroundColor: '#FFFFFF'}}>Diajukan</option>
-                  <option value="Ditolak" style={{backgroundColor: '#FFFFFF'}}>Ditolak</option>
+                  <option value="DIAJUKAN" style={{backgroundColor: '#FFFFFF', color: '#000000'}}>DIAJUKAN</option>
+                  <option value="KONFIRMASI" style={{backgroundColor: '#FFFFFF', color: '#000000'}}>KONFIRMASI</option>
+                  <option value="DISEWA" style={{backgroundColor: '#FFFFFF', color: '#000000'}}>DISEWA</option>
+                  <option value="DITOLAK" style={{backgroundColor: '#FFFFFF', color: '#000000'}}>DITOLAK</option>
+                  <option value="KEMBALI" style={{backgroundColor: '#FFFFFF', color: '#000000'}}>KEMBALI</option>
                 </select>
                 </div>
               </div>
@@ -173,19 +214,21 @@ export default function Dashboard() {
         <div className="object-cover relative w-full sm:w-[600px] p-8 h-[screen] rounded-xl overflow-hidden bg-[#FFFFFF] ml-[24px] mb-[36px] mt-[36px] mr-[20px]">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h2 className="font-bold text-c-text-dark text-xl">Recent Transaction</h2>
-            <button style={{
-              fontSize: '12px',
-              letterSpacing: '0.02em',
-              fontWeight: '700',
-              color: '#3563E9',
-              display: 'inline-block',
-              padding: '0.3em 2em',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}>
-              View All
-            </button>
+            <Link href="/order-list">
+              <button style={{
+                fontSize: '12px',
+                letterSpacing: '0.02em',
+                fontWeight: '700',
+                color: '#3563E9',
+                display: 'inline-block',
+                padding: '0.3em 2em',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}>
+                View All
+              </button>
+            </Link>
           </div>
           {mergedData.slice(0, 5).map(data => (
             <div key={data._id} style={{ display: 'flex', alignItems: 'center', marginBottom: '40px',marginTop: '40px' }}>
@@ -202,8 +245,8 @@ export default function Dashboard() {
                       fontSize: '12px',
                       letterSpacing: '0.05em',
                       fontWeight: 'semi-bold',
-                      backgroundColor: isUpdating && data._id === selectedData._id ? '#FFFFFF' : data.status === 'Ditolak' ? '#FFA37A' : data.status === 'Konfirmasi' ? '#7EC2FF' : '#BCE455',
-                      color: isUpdating && data._id === selectedData._id ? '#000000' : data.status === 'Ditolak' ? '#930B16' : data.status === 'Konfirmasi' ? '#1A4393' : '#4C7A0B',
+                      backgroundColor: data.status === 'DITOLAK' ? '#FFA37A' : data.status === 'KONFIRMASI' ? '#96FDF1' : data.status === 'DISEWA' ? '#7EC2FF' : data.status === 'DIAJUKAN' ? '#FFE488' : '#BCE455',
+                      color: data.status === 'DITOLAK' ? '#930B16' : data.status === 'KONFIRMASI' ? '#357672' : data.status === 'DISEWA' ? '#1A4393' : data.status === 'DIAJUKAN' ? '#7A4D0B' : '#4C7A0B',
                       display: 'inline-block',
                       padding: '0.3em 2em',
                       border: 'none',
