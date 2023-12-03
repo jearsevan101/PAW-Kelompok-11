@@ -47,7 +47,7 @@ export default function CarDescription() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="container min-h-screen mx-auto pt-20">
         {carDetails ? (
           <main className="my-6 mx-4">
@@ -99,7 +99,12 @@ export default function CarDescription() {
                     ) : (
                       <p>Price not available</p>
                     )}
-                    <Link href="/orders/form">
+                    <Link
+                      href={{
+                        pathname: "/orders/form",
+                        query: { id: id },
+                      }}
+                    >
                       <Button>Rent Now</Button>
                     </Link>
                   </div>
@@ -123,7 +128,7 @@ export default function CarDescription() {
           </div>
         )}
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }
@@ -156,7 +161,8 @@ const MainImage = ({ src }) => {
 const ViewMainImage = ({ src, className }) => {
   return (
     <div
-      className={`${className} box-border w-full h-32 flex items-center py-4 bg-c-primary pattern rounded-lg`}>
+      className={`${className} box-border w-full h-32 flex items-center py-4 bg-c-primary pattern rounded-lg`}
+    >
       <div className="w-full h-[50px] relative">
         <Image src={src} alt="Car" layout="fill" objectFit="contain" />
       </div>
@@ -197,7 +203,8 @@ const CarouselImage = ({ data }) => {
                 ? "border-c-primary box-border border-[3px] border-solid rounded-lg"
                 : ""
             }`}
-            onClick={() => handleImageClick(image)}>
+            onClick={() => handleImageClick(image)}
+          >
             {image !== images[0] ? (
               <Image
                 className={`transition-all rounded-lg ${
