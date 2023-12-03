@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import SideButton from 'components/SideButton';
+//import SideButton from 'components/SideButton';
 import SideBar from 'components/SideBar';
 import Navbar from "@/components/navbar";
 import { useEffect, useState } from 'react';

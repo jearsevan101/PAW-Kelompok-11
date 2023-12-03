@@ -31,7 +31,7 @@ const Navbar = ({onSearchSend,onFilterSend}) => {
     setFilterVisible((prev) => !prev);
   };
   const handleApplyFilters = (price,capacity,type,selectedCity) => {
-    console.log("Filters applied in Navbar:", { price, capacity, type,selectedCity }, );
+    console.log("Filters applied in Navbar:", { price, capacity, type,selectedCity }, jwtDecode(Cookies.get("auth_info")));
     onFilterSend(price, capacity, type,selectedCity)
   };
   return (

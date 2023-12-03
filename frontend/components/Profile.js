@@ -8,6 +8,7 @@ import axios from "axios";
 
 const Profile = (logOut) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
+    const [isLoginAsAdmin, setisLoginAsAdmin] = useState(false);
     const [name, setName] = useState('');
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
@@ -17,6 +18,10 @@ const Profile = (logOut) => {
     useEffect(() => {
       try {
         const id = jwtDecode(Cookies.get("auth_info")).id
+        const username = jwtDecode(Cookies.get("auth_info")).username
+        if(username == "admin"){
+          setisLoginAsAdmin(true);
+        }
         const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/customer/${id}`;
         axios
           .get(apiUrl)
@@ -35,6 +40,7 @@ const Profile = (logOut) => {
     }, []);
     const logOutClicked = () =>{
       Cookies.remove("auth_info");
+      setisLoginAsAdmin(false);
       window.location.reload();
       logOut;
     }
@@ -57,22 +63,42 @@ const Profile = (logOut) => {
             </div>
             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
               <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Dashboard
-                </a>
+                {isLoginAsAdmin?(
+                  <Link href={`/admin/dashboard`}>
+                    <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Admin Dashboard
+                    </div>
+                  </Link>
+                ):(
+                  <Link href={`/admin/dashboard`}>
+                    <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      User Dashboard
+                    </div>
+                  </Link>
+                )}
               </li>
               <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Order List
-                </a>
+              {isLoginAsAdmin?(
+                  <Link href={`/admin/list-car`}>
+                    <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      List Car
+                    </div>
+                  </Link>
+                ):(
+                  <Link href={`/admin/dashboard`}>
+                    <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Order List
+                    </div>
+                  </Link>
+                )}
               </li>
             </ul>
             <div className="py-2">
-              <a onClick={logOutClicked}
+              <li onClick={logOutClicked}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
                 Sign out
-              </a>
+              </li>
             </div>
           </div>
         )}
