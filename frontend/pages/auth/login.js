@@ -2,12 +2,12 @@ import Button from "@/components/Button";
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/utils/context/AuthContext";
-import useNotification from "@/utils/hooks/useNotification";
+// import useNotification from "@/utils/hooks/useNotification";
 import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
-  const { onError, onSuccess } = useNotification();
+  // const { onError, onSuccess } = useNotification();
   const { loginCustomer } = useContext(AuthContext);
   const [loginData, setLoginData] = useState({
     username: "",
@@ -28,13 +28,13 @@ export default function Login() {
     try {
       const response = await loginCustomer(loginData);
       if (response) {
-        onSuccess("Login Success");
+        alert("Login Success");
         router.push("/");
       } else {
-        onError("Login Failed");
+        alert("Login Failed");
       }
     } catch (err) {
-      onError("Login Failed");
+      alert("Login Failed");
       console.log("error: ", err.message);
     }
   };
