@@ -1,3 +1,4 @@
+import BackToTopButton from "@/components/BacktoTop";
 import "@/styles/globals.css";
 import { AuthContextProvider } from "@/utils/context/AuthContext";
 import Head from "next/head";
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <AuthContextProvider>
         <ToastContainer />
+        <BackToTopButton/>
         <Component {...pageProps} />
       </AuthContextProvider>
     </>
