@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const ReusableForm = ({ label, type, placeholder, isLongText, name, options }) => {
-  const [value, setValue] = useState('');
+const ReusableForm = ({ label, type, placeholder, isLongText, name, options, setValue, value }) => {
+  // const [value, setValue] = useState('');
 
   const handleChange = (e) => {
     setValue(e.target.value);
