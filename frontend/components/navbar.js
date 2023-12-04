@@ -36,7 +36,7 @@ const Navbar = ({onSearchSend,onFilterSend}) => {
   };
   return (
     <header
-      className="w-full absolute z-10 bg-white shadow-md"
+      className="w-full absolute z-50 bg-white shadow-md"
       style={{ height: "80px" }}
     >
       <nav className="max-w-[1440px] mx-auto flex justify-between items-center sm:px-4 px-6 py-4">
