@@ -8,6 +8,7 @@ import CarCard from "@/components/CarCard";
 import Loading from "@/components/Loading";
 import Footer from "@/components/footer";
 import Profile from "@/components/Profile";
+import { useRouter } from "next/router";
 
 export default function Home() {
   // const [kendaraanList, setKendaraanList] = useState([]);
@@ -18,21 +19,19 @@ export default function Home() {
   const [price, setPrice] = useState(3000000);
   const [capacity, setCapacity] = useState(null);
   const [type, setType] = useState('');
-  // useEffect(() => {
-  //   const apiUrl = "https://paw-kelompok-11-server.vercel.app/api/kendaraan";
+  const router = useRouter();
 
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response) => {
-  //       setKendaraanList(response.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //       setLoading(false);
-  //     });
-  // }, []);
   useEffect(() => {
+    const { nameF, slc_city, priceF, capacityF, typeF} = router.query;
+    if (nameF) {
+      setName(nameF);
+    }
+    if(slc_city || priceF || capacityF || typeF){
+      setSelectedCity(slc_city);
+      setPrice(priceF);
+      setCapacity(capacityF);
+      setType(typeF);
+    }
     const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}&sort=asc&hargaBelow=${price|| ''}&capacity=${capacity|| ''}&type=${type|| ''}&kota=${selectedCity|| ''}`;
     console.log("API URL:", apiUrl);
     axios
@@ -65,13 +64,11 @@ export default function Home() {
     setPrice(price);
     setType(type);
     setSelectedCity(selectedCity);
-    console.log("handleFilterChange price", price);
-    console.log("handleFilterChange capacity", capacity);
-    console.log("handleFilterChange type", type);
   };
   return (
     <>
       <Navbar onSearchSend={handleNameChange} onFilterSend={handleFiltersChange}/>
+      <Profile/>
       <div className="container min-h-screen mx-auto pt-20">
         {loading ? (
           <div className="flex items-center min-h-screen justify-center ">

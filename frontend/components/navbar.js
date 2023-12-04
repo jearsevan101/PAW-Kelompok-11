@@ -7,13 +7,15 @@ import Filter from "./Filter";
 import Profile from "./Profile";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/router";
 
 const Navbar = ({ onSearchSend, onFilterSend }) => {
   const [userLogin, setUserLogin] = useState(false);
+  const [onMainPages, setOnMainPages] = useState(true);
   const [isFilterVisible, setFilterVisible] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-
+  const router = useRouter();
   useEffect(() => {
     try {
       const jwt = jwtDecode(Cookies.get("auth_info"));
@@ -25,9 +27,22 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
       console.error(error);
     }
   }, []);
-
+  useEffect(() => {
+    if (router.pathname !== "/") {
+      setOnMainPages(false);
+    }else {
+      setOnMainPages(true);
+    }
+  }, [router.pathname]);
   const handleSearch = (query) => {
-    onSearchSend(query);
+    if(!onMainPages){
+      router.push({
+        pathname: '/',
+        query: { nameF: query }
+      })
+    }else {
+      onSearchSend(query);
+    }
     console.log("Searching for:", query);
   };
 
@@ -41,6 +56,11 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
       { price, capacity, type, selectedCity },
       jwtDecode(Cookies.get("auth_info"))
     );
+    if(!onMainPages){
+      router.push({
+        pathname: '/',
+        query: { slc_city: selectedCity, priceF: price, capacityF : capacity, typeF: type }
+    })}
     onFilterSend(price, capacity, type, selectedCity);
   };
 
