@@ -31,7 +31,7 @@ const CarCard = ({ data, isAdmin }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-[0_35px_50px_5px_rgba(0,0,0,0.05)] p-6 gap-y-8 flex flex-col overflow-hidden">
+    <div className="bg-white rounded-xl shadow-[0_35px_40px_4px_rgba(0,0,0,0.02)] p-6 gap-y-8 flex flex-col overflow-hidden">
       <div className="absolute">
         {[1, 2, 3].map((index) => (
           <div
