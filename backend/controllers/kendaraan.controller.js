@@ -5,12 +5,11 @@ const Regencies = require("../data/kota.js");
 const createKendaraan = async (req, res) => {
   const { nama, deskripsi, lokasi, kota, harga, available, img_url, capacity, fuel_capacity, type, jumlah_tersewa} = req.body;
   const kota_uppercase = kota.toUpperCase();
-
   try {
     if (!Regencies.includes(kota_uppercase)) {
       return res.status(400).json({error: "invalid kota value"});
     }
-    if ((type !== "AUTO") && (type !== "MANUAL")) {
+    if ((type !== "Auto") && (type !== "Manual")) {
       return res.status(400).json({error: "invalid car type value"});
     }
     const kendaraan = await Kendaraan.create({

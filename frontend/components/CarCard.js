@@ -4,6 +4,7 @@ import Button from "./Button";
 import { HiOutlineLocationMarker, HiTrash } from "react-icons/hi";
 import { BsFillFuelPumpFill, BsPeopleFill } from "react-icons/bs";
 import { RiSteering2Fill } from "react-icons/ri";
+import { useRouter } from 'next/navigation'
 
 const CarCard = ({ data, isAdmin }) => {
   const {
@@ -18,9 +19,12 @@ const CarCard = ({ data, isAdmin }) => {
     img_url,
   } = data;
 
-  const formattedHarga = harga.toLocaleString("id-ID");
+  const router = useRouter()
 
+  const formattedHarga = harga.toLocaleString("id-ID");
   const handleEdit = () => {
+    const kendaraanId = data._id
+    router.push(`/admin/${kendaraanId}`)
     // Implement your logic for editing the car
     console.log("Edit Car:", data);
   };
