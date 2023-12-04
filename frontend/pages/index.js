@@ -72,7 +72,6 @@ export default function Home() {
   return (
     <>
       <Navbar onSearchSend={handleNameChange} onFilterSend={handleFiltersChange}/>
-      <Profile/>
       <div className="container min-h-screen mx-auto pt-20">
         {loading ? (
           <div className="flex items-center min-h-screen justify-center ">

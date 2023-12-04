@@ -70,9 +70,10 @@ export default function AddCar() {
     <>
       <Navbar />
       <main className="min-h-screen pt-20 bg-[#F6F7F9] flex flex-col md:flex-row justify-between">
-        <div className="w-64 min-w-[200px] bg-white p-4">
+        <div className="md:w-64 w-full">
           <SideBar />
         </div>
+
         <div className="flex-grow rounded-lg m-8 bg-white p-8">
           <h2 className="text-lg font-bold mb-4">Detail Rent Car</h2>
 

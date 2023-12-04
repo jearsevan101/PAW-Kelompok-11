@@ -4,7 +4,6 @@ import SideBar from "@/components/SideBar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-
 export default function ListCar() {
   const [kendaraanList, setKendaraanList] = useState([]);
   useEffect(() => {
@@ -23,7 +22,7 @@ export default function ListCar() {
     <>
       <Navbar />
       <main className="min-h-screen pt-20 bg-[#F6F7F9] flex flex-col md:flex-row justify-between">
-        <div className="w-64 min-w-[200px] bg-white p-4">
+      <div className="md:w-64 w-full">
           <SideBar />
         </div>
         <div className="flex-grow rounded-lg m-8 bg-white p-8">

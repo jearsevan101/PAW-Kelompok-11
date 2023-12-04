@@ -16,11 +16,11 @@ const Footer = () =>{
               height={50}
             />
           </div>
-          <p>
+          <p className='text-[#717171]'>
             Ease of doing a car rental safely and reliably. <br/>Of course at a low price
           </p>
-          <div className="border-t border-black flex my-4 mx-0"></div>
-          <p>
+          <div className="border-t border-[c-text-grey] flex my-4"></div>
+          <p className='font-semibold text-sm'>
             ©2023 RentalIn. All right reserved
           </p>
         </div>
