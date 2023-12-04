@@ -8,7 +8,6 @@ import Profile from "./Profile";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/router";
-
 const Navbar = ({ onSearchSend, onFilterSend }) => {
   const [userLogin, setUserLogin] = useState(false);
   const [onMainPages, setOnMainPages] = useState(true);
@@ -83,29 +82,27 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
   }, [prevScrollPos, visible]);
 
   return (
-    <header
-      className={`w-full fixed z-50 bg-white shadow-md transition-transform duration-300 ${
-        visible ? "transform translate-y-0" : "transform -translate-y-full"
-      }`}
-      style={{ height: "80px" }}
-    >
-      <nav className="max-w-[1440px] mx-auto flex justify-between items-center sm:px-4 px-6 py-4">
-        <div className="flex items-center">
+    <header className={`w-full fixed z-50 bg-white max-h-[150px] shadow-md transition-transform duration-300 ${
+      visible ? "transform translate-y-0" : "transform -translate-y-full"
+    }`}>
+      <nav className="max-w-[1440px] mx-auto flex flex-col sm:flex-row justify-between items-center sm:px-4 px-6 py-4">
+        <div className="flex items-center sm:order-1 order-2">
           <Link href="/" className="flex justify-center items-center">
             <Image src="/Logo.svg" alt="Logo" width={100} height={50} />
           </Link>
-          <div className="ml-20">
-            <Searchbar onSearch={handleSearch} onFilterClick={handleFilterClick} />
-          </div>
         </div>
-
-        {userLogin ? (
-          <Profile logOut={() => setUserLogin(false)} />
-        ) : (
-          <Link href={`/auth/login`}>
-            <Button>Login</Button>
-          </Link>
-        )}
+        <div className="flex items-center sm:order-3 order-1">
+          {userLogin ? (
+            <Profile logOut={() => setUserLogin(false)} />
+          ) : (
+            <Link href={`/auth/login`}>
+              <Button>Login</Button>
+            </Link>
+          )}
+        </div>
+        <div className="flex-1 flex justify-start ml-0 sm:ml-10 items-center sm:order-2  order-3 mt-4 sm:mt-0">
+          <Searchbar onSearch={handleSearch} onFilterClick={handleFilterClick} />
+        </div>
       </nav>
       {isFilterVisible && <Filter onApplyFilters={handleApplyFilters} />}
     </header>

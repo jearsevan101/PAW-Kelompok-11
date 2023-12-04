@@ -53,7 +53,7 @@ const Profile = (logOut) => {
         {isDropdownVisible && (
           <div
             id="dropdownInformation"
-            className="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+            className="absolute right-[-65px] sm:right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
             
           >
             <div className="px-4 py-3 text-sm text-gray-900 dark:text-white mb-1">
