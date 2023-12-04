@@ -14,7 +14,7 @@ export default function AddCar() {
   const [available, setAvailable] = useState("")
   const [img_url, setImg_url] = useState(['', '', ''])
   const [capacity, setCapacity] = useState("")
-  const [type, setType] = useState("")
+  const [type, setType] = useState("Manual")
   // const [jumlah_tersewa, setJumlah_tersewa] = useState(0)
   const [fuel_capacity, setFuel_capacity] = useState("")
   

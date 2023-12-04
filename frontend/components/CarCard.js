@@ -5,6 +5,7 @@ import { HiOutlineLocationMarker, HiTrash } from "react-icons/hi";
 import { BsFillFuelPumpFill, BsPeopleFill } from "react-icons/bs";
 import { RiSteering2Fill } from "react-icons/ri";
 import { useRouter } from 'next/navigation'
+import axios from "axios";
 
 const CarCard = ({ data, isAdmin }) => {
   const {
@@ -22,6 +23,7 @@ const CarCard = ({ data, isAdmin }) => {
   const router = useRouter()
 
   const formattedHarga = harga.toLocaleString("id-ID");
+  const kendaraanId = data._id;
   const handleEdit = () => {
     const kendaraanId = data._id
     router.push(`/admin/${kendaraanId}`)
@@ -30,6 +32,17 @@ const CarCard = ({ data, isAdmin }) => {
   };
 
   const handleDelete = () => {
+    const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan/${kendaraanId}`;
+    axios
+      .delete(apiUrl)
+      .then((response) => {
+        alert("Car delete successfully!")
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert(error)
+        console.error("Error fetching data:", error);
+      });
     // Implement your logic for deleting the car
     console.log("Delete Car:", data);
   };
