@@ -11,6 +11,9 @@ import Loading from "@/components/Loading";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
 export default function CarDescription() {
@@ -20,6 +23,19 @@ export default function CarDescription() {
   const [kendaraanList, setKendaraanList] = useState([]);
   const [carDetails, setCarDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const [userLogin, setUserLogin] = useState(false);
+  useEffect(() => {
+    try {
+      const jwt = jwtDecode(Cookies.get("auth_info"));
+
+      if (jwt != null) {
+        setUserLogin(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -99,14 +115,20 @@ export default function CarDescription() {
                     ) : (
                       <p>Price not available</p>
                     )}
-                    <Link
-                      href={{
-                        pathname: "/orders/form",
-                        query: { id: id },
-                      }}
-                    >
-                      <Button>Rent Now</Button>
-                    </Link>
+                    {userLogin ? (
+                      <Link
+                        href={{
+                          pathname: "/orders/form",
+                          query: { id: id },
+                        }}
+                      >
+                        <Button>Rent Now</Button>
+                      </Link>
+                    ) : (
+                      <Link href="/auth/login">
+                        <Button>Rent Now</Button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
