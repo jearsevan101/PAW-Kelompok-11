@@ -12,7 +12,7 @@ const authRoutes = require("./routes/auth.routes.js");
 
 app.use(cors());
 
-// const {verifyToken, verifyAdmin} = require("./middleware/auth.js");
+const { verifyToken, verifyAdmin } = require("./middleware/auth.js");
 
 // middleware
 app.use(express.json());
@@ -23,12 +23,12 @@ app.use((req, res, next) => {
 });
 
 // routes
-// app.use("/api/kendaraan", kendraanRoutes);
-// app.use("/api/sewa", verifyToken, sewaRoutes);
-// app.use("/api/customer", verifyToken, verifyAdmin, customerRoutes);
 app.use("/api/kendaraan", kendraanRoutes);
-app.use("/api/sewa", sewaRoutes);
-app.use("/api/customer", customerRoutes);
+app.use("/api/sewa", verifyToken, sewaRoutes);
+app.use("/api/customer", verifyToken, verifyAdmin, customerRoutes);
+// app.use("/api/kendaraan", kendraanRoutes);
+// app.use("/api/sewa", sewaRoutes);
+// app.use("/api/customer", customerRoutes);
 app.use("/api/auth", authRoutes);
 
 // connect to db
