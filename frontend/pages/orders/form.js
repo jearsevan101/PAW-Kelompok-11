@@ -84,38 +84,37 @@ export default function OrdersForm() {
             <div className="mx-4 mt-4">
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="flex flex-col md:w-2/3 gap-8">
-                  <div className="w-full bg-white rounded-xl p-8">
-                    <h2 className="text-lg font-bold mb-4">User Information</h2>
+                  <div className="w-full">
                     <form>
-                      <div className="grid grid-cols-2 gap-x-4">
-                        <Form
-                          label="Name"
-                          name="name"
-                          value={name}
-                          type="text"
-                          placeholder="name"
-                          setValue={() => {}}
-                          disabled={true}
-                          className="w-full md:w-1/2"
-                        />
-                        <Form
-                          label="Email"
-                          name="email"
-                          value={email}
-                          type="text"
-                          placeholder="email"
-                          setValue={() => {}}
-                          disabled={true}
-                          className="w-full md:w-1/2"
-                        />
+                      <div className="bg-white rounded-xl p-8">
+                        <h2 className="text-lg font-bold mb-4">
+                          User Information
+                        </h2>
+                        <div className="grid grid-cols-2 gap-x-4">
+                          <Form
+                            label="Name"
+                            name="name"
+                            value={name}
+                            type="text"
+                            placeholder="name"
+                            setValue={() => {}}
+                            disabled={true}
+                            className="w-full md:w-1/2"
+                          />
+                          <Form
+                            label="Email"
+                            name="email"
+                            value={email}
+                            type="text"
+                            placeholder="email"
+                            setValue={() => {}}
+                            disabled={true}
+                            className="w-full md:w-1/2"
+                          />
+                        </div>
                       </div>
-                    </form>
-                  </div>
-
-                  <div className="w-full bg-white rounded-xl p-8">
-                    <h2 className="text-lg font-bold mb-4">Rental Info</h2>
-                    <form>
-                      <div>
+                      <div className="bg-white rounded-xl p-8 mt-8">
+                        <h2 className="text-lg font-bold mb-4">Rental Info</h2>
                         <Form
                           label="Pick-Up Date"
                           name="Pick-Up Date"
@@ -137,14 +136,9 @@ export default function OrdersForm() {
                           }}
                         />
                       </div>
-                    </form>
-                  </div>
-
-                  <div className="w-full bg-white rounded-xl p-8">
-                    <h2 className="text-lg font-bold mb-4">Confirmation</h2>
-                    <form>
-                      <div>
-                        <label className="block text-black text-sm font-semibold mb-8">
+                      <div className="bg-white rounded-xl p-8 mt-8">
+                        <h2 className="text-lg font-bold mb-4">Confirmation</h2>
+                        <label className="block text-black font-semibold mb-8 text-lg">
                           <input
                             className="mr-4 bg-[#F6F7F9] focus:outline-none transition duration-300 p-4"
                             type="checkbox"
