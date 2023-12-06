@@ -36,7 +36,7 @@ export default function Dashboard() {
         },
       })
       .then((response) => {
-        setkendaraanListSearch(response.data);
+        setkendaraanList(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -84,9 +84,17 @@ export default function Dashboard() {
     setIsUpdating(true);
 
     axios
-      .put(`https://paw-kelompok-11-server.vercel.app/api/sewa/${id}`, {
-        status: newStatus,
-      })
+      .put(
+        `https://paw-kelompok-11-server.vercel.app/api/sewa/${id}`,
+        {
+          status: newStatus,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      )
       .then((response) => {
         setMergedData(updatedData);
       })
