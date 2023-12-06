@@ -8,8 +8,9 @@ const useAxios = async (url, method, data, isProtected = true, params = {}) => {
     if (isProtected) {
       const token = Cookies.get("auth_info");
       if (token) {
-        headers["authorization"] = `Bearer ${token}`;
+        headers["Authorization"] = `Bearer ${token}`;
       }
+      console.log("headers: ", headers);
     }
 
     const res = await axiosInstance({ url, method, data, headers, params });

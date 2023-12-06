@@ -4,12 +4,14 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import axios from "axios";
+import useAxios from "@/utils/hooks/useAxios";
 
 import Navbar from "@/components/navbar";
 import Form from "@/components/Form";
 import Footer from "@/components/footer";
 import Button from "@/components/Button";
 import Link from "next/link";
+import Image from "next/image";
 
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -28,9 +30,51 @@ export default function OrdersForm() {
   const [tanggalSewa, setTanggalSewa] = useState(initialDate);
   const [tanggalKembali, setTanggalKembali] = useState(initialDate);
   const [isChecked, setIsChecked] = useState(false);
+  const [jumlahHari, setJumlahHari] = useState(0);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
+  };
+
+  const submitRentCar = (e) => {
+    e.preventDefault();
+
+    if (!isChecked) {
+      alert("Please agree to our terms and conditions and privacy policy");
+      return;
+    }
+
+    const data = {
+      customer_id: jwtDecode(Cookies.get("auth_info")).id,
+      kendaraan_id: id,
+      tanggal_sewa: tanggalSewa,
+      tanggal_kembali: tanggalKembali,
+      total_harga: carDetails.harga * jumlahHari,
+    };
+
+    const bearerToken = Cookies.get("auth_info");
+
+    try {
+      const response = axios.post(
+        "https://paw-kelompok-11-server.vercel.app/api/sewa",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response) {
+        alert("Rental Success");
+        router.push("/order-list");
+      } else {
+        alert("Rental Failed");
+      }
+    } catch (err) {
+      console.log("Error: ", err);
+    }
   };
 
   useEffect(() => {
@@ -83,7 +127,39 @@ export default function OrdersForm() {
           carDetails ? (
             <div className="mx-4 mt-4">
               <div className="flex flex-col md:flex-row gap-8">
-                <div className="flex flex-col md:w-2/3 gap-8">
+                <div className="w-full md:w-1/3 bg-white rounded-xl p-8">
+                  <h2 className="text-lg font-bold mb-4">Rental Summary</h2>
+                  <div className="grid grid-cols-2 gap-x-4">
+                    <div
+                      className={`box-border w-full h-32 flex items-center py-4 bg-c-primary pattern rounded-lg`}
+                    >
+                      <div className="w-full h-[50px] relative">
+                        <Image
+                          src={carDetails.img_url[0]}
+                          alt="Car"
+                          layout="fill"
+                          objectFit="contain"
+                        />
+                      </div>
+                    </div>
+                    <div className="py-8">
+                      <h3 className="text-md font-bold mb-4">
+                        {carDetails.nama}
+                      </h3>
+                      <span>{jumlahHari} Hari</span>
+                    </div>
+                  </div>
+                  <div className="">
+                    <h2 className="text-lg font-bold mb-4">Rental Price</h2>
+                    <div className="flex flex-row justify-between">
+                      <span className="text-md font-medium">Total</span>
+                      <span className="text-md font-medium">
+                        Rp. {carDetails.harga * jumlahHari}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col md:w-2/3 gap-8 md:order-first">
                   <div className="w-full">
                     <form>
                       <div className="bg-white rounded-xl p-8">
@@ -122,7 +198,27 @@ export default function OrdersForm() {
                           type="date"
                           placeholder="Pick-Up Date"
                           setValue={(data) => {
+                            const startDate = new Date(data);
+                            const endDate = new Date(tanggalKembali);
+                            const timeDiff = endDate - startDate;
+                            const daysDiff = Math.ceil(
+                              timeDiff / (1000 * 3600 * 24)
+                            );
+                            if (daysDiff < 0) {
+                              alert(
+                                "Tanggal kembali tidak boleh kurang dari tanggal sewa"
+                              );
+                              return;
+                            }
+                            if (startDate < new Date()) {
+                              alert(
+                                "Tanggal sewa tidak boleh kurang dari tanggal hari ini"
+                              );
+                              return;
+                            }
+
                             setTanggalSewa(data);
+                            setJumlahHari(daysDiff);
                           }}
                         />
                         <Form
@@ -132,7 +228,29 @@ export default function OrdersForm() {
                           type="date"
                           placeholder="Drop-off Date"
                           setValue={(data) => {
+                            const startDate = new Date(tanggalSewa);
+                            const endDate = new Date(data);
+
+                            const timeDiff = endDate - startDate;
+                            const daysDiff = Math.ceil(
+                              timeDiff / (1000 * 3600 * 24)
+                            );
+
+                            if (daysDiff < 0) {
+                              alert(
+                                "Tanggal kembali tidak boleh kurang dari tanggal sewa"
+                              );
+                              return;
+                            }
+                            if (endDate < new Date()) {
+                              alert(
+                                "Tanggal kembali tidak boleh kurang dari tanggal hari ini"
+                              );
+                              return;
+                            }
+
                             setTanggalKembali(data);
+                            setJumlahHari(daysDiff);
                           }}
                         />
                       </div>
@@ -148,12 +266,7 @@ export default function OrdersForm() {
                           I agree with our terms and conditions and privacy
                           policy
                         </label>
-                        <button
-                          type="submit"
-                          className="bg-c-primary font-semibold text-white px-5 py-3 rounded-md hover:opacity-90 focus:outline-none focus:ring"
-                        >
-                          Rent Now
-                        </button>
+                        <Button onClick={submitRentCar}>Rent Now</Button>
                       </div>
                     </form>
                   </div>

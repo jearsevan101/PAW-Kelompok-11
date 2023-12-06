@@ -4,6 +4,7 @@ import SideBar from "components/SideBar";
 import Navbar from "@/components/navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Dashboard() {
   const [sewaList, setSewaList] = useState([]);
@@ -19,6 +20,8 @@ export default function Dashboard() {
   const [capacity, setCapacity] = useState(null);
   const [type, setType] = useState("");
 
+  const bearerToken = Cookies.get("auth_info");
+
   useEffect(() => {
     const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${
       name || ""
@@ -27,7 +30,11 @@ export default function Dashboard() {
     }&kota=${selectedCity || ""}`;
     console.log("API URL:", apiUrl);
     axios
-      .get(apiUrl)
+      .get(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      })
       .then((response) => {
         setkendaraanListSearch(response.data);
         setLoading(false);
@@ -94,7 +101,11 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get("https://paw-kelompok-11-server.vercel.app/api/sewa/")
+      .get("https://paw-kelompok-11-server.vercel.app/api/sewa/", {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      })
       .then((response) => {
         setSewaList(response.data);
         axios
@@ -157,7 +168,7 @@ export default function Dashboard() {
         onFilterSend={handleFiltersChange}
       />
       <main className="min-h-screen pt-20 bg-[#F6F7F9] flex flex-col sm:flex-row justify-between">
-      <div className="md:w-64 w-full">
+        <div className="md:w-64 w-full">
           <SideBar />
         </div>
 
@@ -175,7 +186,8 @@ export default function Dashboard() {
                       height: "75px",
                       position: "relative",
                       marginRight: "20px",
-                    }}>
+                    }}
+                  >
                     <Image
                       src={selectedData.kendaraan.img_url[0]}
                       alt={selectedData.kendaraan.nama}
@@ -210,7 +222,8 @@ export default function Dashboard() {
                     display: "flex",
                     alignItems: "center",
                     marginTop: "10px",
-                  }}>
+                  }}
+                >
                   <img
                     src="/Calendar.png"
                     alt="Date Icon"
@@ -218,7 +231,8 @@ export default function Dashboard() {
                   />
                   <div
                     className="font-semibold text-[16px]"
-                    style={{ marginRight: "10px" }}>
+                    style={{ marginRight: "10px" }}
+                  >
                     {" "}
                     Pick-Up
                   </div>
@@ -237,7 +251,8 @@ export default function Dashboard() {
                     display: "flex",
                     alignItems: "center",
                     marginTop: "20px",
-                  }}>
+                  }}
+                >
                   <img
                     src="/Calendar.png"
                     alt="Date Icon"
@@ -245,7 +260,8 @@ export default function Dashboard() {
                   />
                   <div
                     className="font-semibold text-[16px]"
-                    style={{ marginRight: "10px" }}>
+                    style={{ marginRight: "10px" }}
+                  >
                     {" "}
                     Drop-Off
                   </div>
@@ -265,7 +281,8 @@ export default function Dashboard() {
                     textAlign: "right",
                     marginTop: "10px",
                     marginBottom: "40px",
-                  }}>
+                  }}
+                >
                   Rp{selectedData.total_harga.toLocaleString("id-ID")}
                 </p>
                 <div className style={{ textAlign: "right" }}>
@@ -304,30 +321,36 @@ export default function Dashboard() {
                       border: "none",
                       borderRadius: "4px",
                       cursor: "pointer",
-                    }}>
+                    }}
+                  >
                     <option
                       value="DIAJUKAN"
-                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}>
+                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
+                    >
                       DIAJUKAN
                     </option>
                     <option
                       value="KONFIRMASI"
-                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}>
+                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
+                    >
                       KONFIRMASI
                     </option>
                     <option
                       value="DISEWA"
-                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}>
+                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
+                    >
                       DISEWA
                     </option>
                     <option
                       value="DITOLAK"
-                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}>
+                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
+                    >
                       DITOLAK
                     </option>
                     <option
                       value="KEMBALI"
-                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}>
+                      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
+                    >
                       KEMBALI
                     </option>
                   </select>
@@ -342,7 +365,8 @@ export default function Dashboard() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-            }}>
+            }}
+          >
             <h2 className="font-bold text-c-text-dark text-xl">
               Recent Transaction
             </h2>
@@ -358,7 +382,8 @@ export default function Dashboard() {
                   border: "none",
                   borderRadius: "4px",
                   cursor: "pointer",
-                }}>
+                }}
+              >
                 View All
               </button>
             </Link>
@@ -371,7 +396,8 @@ export default function Dashboard() {
                 alignItems: "center",
                 marginBottom: "40px",
                 marginTop: "40px",
-              }}>
+              }}
+            >
               {data.kendaraan.img_url && (
                 <div
                   style={{
@@ -379,7 +405,8 @@ export default function Dashboard() {
                     height: "75px",
                     position: "relative",
                     marginRight: "20px",
-                  }}>
+                  }}
+                >
                   <Image
                     src={data.kendaraan.img_url[0]}
                     alt={data.kendaraan.nama}
@@ -393,7 +420,8 @@ export default function Dashboard() {
                   display: "flex",
                   justifyContent: "space-between",
                   width: "100%",
-                }}>
+                }}
+              >
                 <div>
                   <p className="font-bold text-c-text-dark tracking-wide mb-[6px]">
                     {data.kendaraan.nama}
@@ -429,7 +457,8 @@ export default function Dashboard() {
                       border: "none",
                       borderRadius: "4px",
                       cursor: "pointer",
-                    }}>
+                    }}
+                  >
                     {isUpdating && data._id === selectedData._id
                       ? "Updating status..."
                       : data.status}
