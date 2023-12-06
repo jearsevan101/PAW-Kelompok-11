@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 const createSewa = async (req, res) => {
   const { kendaraan_id, customer_id, tanggal_sewa, tanggal_kembali, total_harga } = req.body;
-  const status = "KONFIRMASI";
+  const status = "DIAJUKAN";
 
   try {
     // Find Customer
