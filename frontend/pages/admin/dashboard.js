@@ -174,9 +174,21 @@ export default function Dashboard() {
           customer: matchingCustomer || {},
         };
       });
-      setMergedData(merged);
-      if (selectedData === null && merged.length > 0) {
-        setSelectedData(merged[0]);
+      
+      const validMerged = merged.filter((sewa) => sewa.kendaraan._id !== undefined);
+      const invalidSewaIds = merged.filter((sewa) => sewa.kendaraan._id === undefined).map((sewa) => sewa._id);
+  
+      invalidSewaIds.forEach(async (id) => {
+        try {
+          await useAxios(`https://paw-kelompok-11-server.vercel.app/api/sewa/${id}`, 'DELETE', null, true);
+        } catch (error) {
+          console.error(`Error deleting sewa with id ${id}:`, error);
+        }
+      });
+  
+      setMergedData(validMerged);
+      if (selectedData === null && validMerged.length > 0) {
+        setSelectedData(validMerged[0]);
       }
     }
   }, [sewaList, kendaraanList, customerList, selectedData]);
