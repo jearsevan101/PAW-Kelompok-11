@@ -382,11 +382,13 @@ export default function Dashboard() {
               >
                 {data.kendaraan.img_url && (
                   <div
+                  onClick={() => setSelectedData(data)}
                     style={{
                       width: "150px",
                       height: "75px",
                       position: "relative",
                       marginRight: "20px",
+                      cursor: "pointer",
                     }}
                   >
                     <Image
