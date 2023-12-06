@@ -68,7 +68,7 @@ export default function OrdersForm() {
 
       if (response) {
         alert("Rental Success");
-        router.push("/order-list");
+        router.push("/my-order");
       } else {
         alert("Rental Failed");
       }
