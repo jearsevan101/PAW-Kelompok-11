@@ -52,21 +52,16 @@ const Profile = (logOut) => {
       {isDropdownVisible && (
         <div
           id="dropdownInformation"
-          className="absolute right-[-65px] sm:right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-        >
+          className="absolute right-[-65px] sm:right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
           <div className="px-4 py-3 text-sm text-gray-900 dark:text-white mb-1">
-            <div className="text-lg font-bold text-center">{name}</div>
-            <div className="text-sm font-medium opacity-70 truncate text-center">
+            <div className="text-lg leading-tight font-bold ">{name}</div>
+            <div className="text-sm font-medium opacity-70 truncate">
               @{userName}
-            </div>
-            <div className="text-sm font-medium opacity-70 truncate text-center">
-              {email}
             </div>
           </div>
           <ul
             className="py-2 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownInformationButton"
-          >
+            aria-labelledby="dropdownInformationButton">
             <li>
               {isLoginAsAdmin ? (
                 <Link href={`/admin/dashboard`}>
@@ -100,12 +95,29 @@ const Profile = (logOut) => {
                 </Link>
               ) : null}
             </li>
+            <li>
+              {isLoginAsAdmin ? null : (
+                <Link href={`/edit-profile`}>
+                  <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    Edit Profile
+                  </div>
+                </Link>
+              )}
+            </li>
+            <li>
+              {isLoginAsAdmin ? null : (
+                <Link href={`/change-password`}>
+                  <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    Change Password
+                  </div>
+                </Link>
+              )}
+            </li>
           </ul>
           <div className="py-2">
             <div
               onClick={logOutClicked}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >
+              className="block px-4 py-2 cursor-pointer text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
               Sign out
             </div>
           </div>
