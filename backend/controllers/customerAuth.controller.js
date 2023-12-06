@@ -78,8 +78,39 @@ const readCustomerById = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { id } = req.params;
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    const customer = await Customer.findById(id);
+
+    if (!customer) {
+      return res.status(404).json({ error: "Customer not found." });
+    }
+
+    console.log("Entered current password:", currentPassword);
+    console.log("Stored plain text password:", customer.password);
+    const passwordMatch = currentPassword === customer.password;
+
+    console.log("Password match result:", passwordMatch);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Invalid current password" });
+    }
+    customer.password = newPassword;
+    await customer.save();
+
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (err) {
+    console.error("Error changing password:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   registerCustomer,
   loginCustomer,
   readCustomerById,
+  changePassword,
 };
