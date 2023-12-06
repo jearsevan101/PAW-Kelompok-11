@@ -2,7 +2,9 @@ import Image from "next/image";
 import Navbar from "@/components/navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export default function Dashboard() {
   const [sewaList, setSewaList] = useState([]);
@@ -17,6 +19,7 @@ export default function Dashboard() {
   const [price, setPrice] = useState(3000000);
   const [capacity, setCapacity] = useState(null);
   const [type, setType] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const bearerToken = Cookies.get("auth_info");
 
@@ -194,21 +197,190 @@ export default function Dashboard() {
     }
   }, [sewaList, kendaraanList, customerList, selectedData]);
 
+  useEffect(() => {
+    try {
+      const username = jwtDecode(Cookies.get("auth_info")).username;
+      if (username === "admin") {
+        setIsAdmin(true);
+      }
+    } catch (err) {
+      console.log("Error: ", err.message);
+    }
+  });
+
   return (
     <>
       <Navbar
         onSearchSend={handleNameChange}
         onFilterSend={handleFiltersChange}
       />
-      <main className="container min-h-screen pt-20 bg-[#F6F7F9] flex flex-col sm:flex-row justify-between px-4 sm:px-0">
-        <div className="object-cover relative w-full sm:w-[720px] p-8 h-[screen] rounded-xl overflow-hidden bg-[#FFFFFF] ml-[24px] mb-[36px] mt-[36px]">
-          <h2 className="font-bold text-c-text-dark text-xl mb-[40px]">
-            Recent Rental
-          </h2>
-          {selectedData && (
-            <div>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                {selectedData.kendaraan.img_url && (
+      {isAdmin ? (
+        <main className="container min-h-screen pt-20 bg-[#F6F7F9] flex flex-col sm:flex-row justify-between px-4 sm:px-0">
+          <div className="object-cover relative w-full sm:w-[720px] p-8 h-[screen] rounded-xl overflow-hidden bg-[#FFFFFF] ml-[24px] mb-[36px] mt-[36px]">
+            <h2 className="font-bold text-c-text-dark text-xl mb-[40px]">
+              Recent Rental
+            </h2>
+            {selectedData && (
+              <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {selectedData.kendaraan.img_url && (
+                    <div
+                      style={{
+                        width: "150px",
+                        height: "75px",
+                        position: "relative",
+                        marginRight: "20px",
+                      }}
+                    >
+                      <Image
+                        src={selectedData.kendaraan.img_url[0]}
+                        alt={selectedData.kendaraan.nama}
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-[900] text-[24px]">
+                      {selectedData.kendaraan.nama}
+                    </p>
+                    <p className="font-[500] text-c-text-grey">
+                      {selectedData.kendaraan.type}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div className="font-semibold mt-[40px] text-[16px]">
+                    {" "}
+                    Nama :{" "}
+                  </div>
+                  <p className="font-semibold text-c-text-grey text-[16px]">
+                    {selectedData.customer.nama}
+                  </p>
+                  <div className="font-semibold text-[16px]"> Email : </div>
+                  <p className="font-semibold text-[16px] text-c-text-grey">
+                    {selectedData.customer.email}
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <img
+                      src="/Calendar.png"
+                      alt="Date Icon"
+                      style={{ marginRight: "10px" }}
+                    />
+                    <div
+                      className="font-semibold text-[16px]"
+                      style={{ marginRight: "10px" }}
+                    >
+                      {" "}
+                      Pick-Up
+                    </div>
+                  </div>
+                  <div className="ml-[40px]">
+                    <div className="font-bold text-[16px] mb-[7px]"> Date </div>
+                    <div className="font-semibold text-c-text-grey text-[14px]">
+                      {new Date(selectedData.tanggal_sewa).toLocaleDateString(
+                        "id-ID",
+                        { day: "numeric", month: "long", year: "numeric" }
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <img
+                      src="/Calendar.png"
+                      alt="Date Icon"
+                      style={{ marginRight: "10px" }}
+                    />
+                    <div
+                      className="font-semibold text-[16px]"
+                      style={{ marginRight: "10px" }}
+                    >
+                      {" "}
+                      Drop-Off
+                    </div>
+                  </div>
+                  <div className="ml-[40px]">
+                    <div className="font-bold text-[16px] mb-[7px]"> Date </div>
+                    <div className="font-semibold text-c-text-grey text-[14px]">
+                      {new Date(
+                        selectedData.tanggal_kembali
+                      ).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </div>
+                  </div>
+                  <p
+                    className="font-bold text-[24px]"
+                    style={{
+                      textAlign: "right",
+                      marginTop: "10px",
+                      marginBottom: "40px",
+                    }}
+                  >
+                    {selectedData.total_harga
+                      ? `Rp ${selectedData.total_harga.toLocaleString("id-ID")}`
+                      : "N/A"}
+                  </p>
+                  <div className style={{ textAlign: "center" }}>
+                    <button
+                      onClick={() => handleDelete(selectedData._id)}
+                      style={{
+                        fontSize: "15px",
+                        width: "80%",
+                        letterSpacing: "0.05em",
+                        fontWeight: "semi-bold",
+                        backgroundColor: "#FFA37A",
+                        color: "#930B16",
+                        display: "inline-block",
+                        padding: "0.3em 2em",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Cancel Order
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="object-cover relative w-full sm:w-[720px] p-8 h-[screen] rounded-xl overflow-hidden bg-[#FFFFFF] mb-[36px] mt-[36px]">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <h2 className="font-bold text-c-text-dark text-xl">
+                History Transaction
+              </h2>
+            </div>
+            {mergedData.map((data) => (
+              <div
+                key={data._id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "40px",
+                  marginTop: "40px",
+                }}
+              >
+                {data.kendaraan.img_url && (
                   <div
                     style={{
                       width: "150px",
@@ -218,234 +390,87 @@ export default function Dashboard() {
                     }}
                   >
                     <Image
-                      src={selectedData.kendaraan.img_url[0]}
-                      alt={selectedData.kendaraan.nama}
+                      src={data.kendaraan.img_url[0]}
+                      alt={data.kendaraan.nama}
                       layout="fill"
                       objectFit="contain"
                     />
                   </div>
                 )}
-                <div>
-                  <p className="font-[900] text-[24px]">
-                    {selectedData.kendaraan.nama}
-                  </p>
-                  <p className="font-[500] text-c-text-grey">
-                    {selectedData.kendaraan.type}
-                  </p>
-                </div>
-              </div>
-              <div>
-                <div className="font-semibold mt-[40px] text-[16px]">
-                  {" "}
-                  Nama :{" "}
-                </div>
-                <p className="font-semibold text-c-text-grey text-[16px]">
-                  {selectedData.customer.nama}
-                </p>
-                <div className="font-semibold text-[16px]"> Email : </div>
-                <p className="font-semibold text-[16px] text-c-text-grey">
-                  {selectedData.customer.email}
-                </p>
                 <div
                   style={{
                     display: "flex",
-                    alignItems: "center",
-                    marginTop: "10px",
+                    justifyContent: "space-between",
+                    width: "100%",
                   }}
                 >
-                  <img
-                    src="/Calendar.png"
-                    alt="Date Icon"
-                    style={{ marginRight: "10px" }}
-                  />
-                  <div
-                    className="font-semibold text-[16px]"
-                    style={{ marginRight: "10px" }}
-                  >
-                    {" "}
-                    Pick-Up
+                  <div>
+                    <p className="font-bold text-c-text-dark tracking-wide mb-[6px]">
+                      {data.kendaraan.nama}
+                    </p>
+                    <button
+                      onClick={() => setSelectedData(data)}
+                      style={{
+                        fontSize: "12px",
+                        letterSpacing: "0.05em",
+                        fontWeight: "semi-bold",
+                        backgroundColor:
+                          data.status === "DITOLAK"
+                            ? "#FFA37A"
+                            : data.status === "KONFIRMASI"
+                            ? "#FFF506"
+                            : data.status === "DISEWA"
+                            ? "#7EC2FF"
+                            : data.status === "DIAJUKAN"
+                            ? "#FFE488"
+                            : "#BCE455",
+                        color:
+                          data.status === "DITOLAK"
+                            ? "#930B16"
+                            : data.status === "KONFIRMASI"
+                            ? "#9E7B00"
+                            : data.status === "DISEWA"
+                            ? "#1A4393"
+                            : data.status === "DIAJUKAN"
+                            ? "#7A4D0B"
+                            : "#4C7A0B",
+                        display: "inline-block",
+                        padding: "0.3em 2em",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {isUpdating && data._id === selectedData._id
+                        ? "Updating status..."
+                        : data.status}
+                    </button>
                   </div>
-                </div>
-                <div className="ml-[40px]">
-                  <div className="font-bold text-[16px] mb-[7px]"> Date </div>
-                  <div className="font-semibold text-c-text-grey text-[14px]">
-                    {new Date(selectedData.tanggal_sewa).toLocaleDateString(
-                      "id-ID",
-                      { day: "numeric", month: "long", year: "numeric" }
-                    )}
+                  <div style={{ textAlign: "right" }}>
+                    <p className="mb-2 font-semibold text-c-text-grey">
+                      {new Date(data.tanggal_sewa).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                      })}
+                    </p>
+                    <p className="font-bold text-[16px]">
+                      {data.total_harga
+                        ? `Rp ${data.total_harga.toLocaleString("id-ID")}`
+                        : "N/A"}
+                    </p>
                   </div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginTop: "20px",
-                  }}
-                >
-                  <img
-                    src="/Calendar.png"
-                    alt="Date Icon"
-                    style={{ marginRight: "10px" }}
-                  />
-                  <div
-                    className="font-semibold text-[16px]"
-                    style={{ marginRight: "10px" }}
-                  >
-                    {" "}
-                    Drop-Off
-                  </div>
-                </div>
-                <div className="ml-[40px]">
-                  <div className="font-bold text-[16px] mb-[7px]"> Date </div>
-                  <div className="font-semibold text-c-text-grey text-[14px]">
-                    {new Date(selectedData.tanggal_kembali).toLocaleDateString(
-                      "id-ID",
-                      { day: "numeric", month: "long", year: "numeric" }
-                    )}
-                  </div>
-                </div>
-                <p
-                  className="font-bold text-[24px]"
-                  style={{
-                    textAlign: "right",
-                    marginTop: "10px",
-                    marginBottom: "40px",
-                  }}
-                >
-                  {selectedData.total_harga
-                    ? `Rp ${selectedData.total_harga.toLocaleString("id-ID")}`
-                    : "N/A"}
-                </p>
-                <div className style={{ textAlign: "center" }}>
-                  <button
-                    onClick={() => handleDelete(selectedData._id)}
-                    style={{
-                      fontSize: "15px",
-                      width: "80%",
-                      letterSpacing: "0.05em",
-                      fontWeight: "semi-bold",
-                      backgroundColor: "#FFA37A",
-                      color: "#930B16",
-                      display: "inline-block",
-                      padding: "0.3em 2em",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Cancel Order
-                  </button>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-        <div className="object-cover relative w-full sm:w-[720px] p-8 h-[screen] rounded-xl overflow-hidden bg-[#FFFFFF] mb-[36px] mt-[36px]">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <h2 className="font-bold text-c-text-dark text-xl">
-              History Transaction
-            </h2>
+            ))}
           </div>
-          {mergedData.map((data) => (
-            <div
-              key={data._id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "40px",
-                marginTop: "40px",
-              }}
-            >
-              {data.kendaraan.img_url && (
-                <div
-                  style={{
-                    width: "150px",
-                    height: "75px",
-                    position: "relative",
-                    marginRight: "20px",
-                  }}
-                >
-                  <Image
-                    src={data.kendaraan.img_url[0]}
-                    alt={data.kendaraan.nama}
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                </div>
-              )}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <div>
-                  <p className="font-bold text-c-text-dark tracking-wide mb-[6px]">
-                    {data.kendaraan.nama}
-                  </p>
-                  <button
-                    onClick={() => setSelectedData(data)}
-                    style={{
-                      fontSize: "12px",
-                      letterSpacing: "0.05em",
-                      fontWeight: "semi-bold",
-                      backgroundColor:
-                        data.status === "DITOLAK"
-                          ? "#FFA37A"
-                          : data.status === "KONFIRMASI"
-                          ? "#FFF506"
-                          : data.status === "DISEWA"
-                          ? "#7EC2FF"
-                          : data.status === "DIAJUKAN"
-                          ? "#FFE488"
-                          : "#BCE455",
-                      color:
-                        data.status === "DITOLAK"
-                          ? "#930B16"
-                          : data.status === "KONFIRMASI"
-                          ? "#9E7B00"
-                          : data.status === "DISEWA"
-                          ? "#1A4393"
-                          : data.status === "DIAJUKAN"
-                          ? "#7A4D0B"
-                          : "#4C7A0B",
-                      display: "inline-block",
-                      padding: "0.3em 2em",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {isUpdating && data._id === selectedData._id
-                      ? "Updating status..."
-                      : data.status}
-                  </button>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <p className="mb-2 font-semibold text-c-text-grey">
-                    {new Date(data.tanggal_sewa).toLocaleDateString("id-ID", {
-                      day: "numeric",
-                      month: "long",
-                    })}
-                  </p>
-                  <p className="font-bold text-[16px]">
-                    {data.total_harga
-                      ? `Rp ${data.total_harga.toLocaleString("id-ID")}`
-                      : "N/A"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+        </main>
+      ) : (
+        <div className="flex items-center justify-center h-screen pt-20">
+          <span className="text-lg font-black">
+            Anda tidak memiliki akses ke halaman ini
+          </span>
         </div>
-      </main>
+      )}
     </>
   );
 }
