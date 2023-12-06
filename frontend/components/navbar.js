@@ -82,10 +82,10 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
   }, [prevScrollPos, visible]);
 
   return (
-    <header className={`w-full fixed z-50 bg-white max-h-[150px] shadow-md transition-transform duration-300 ${
+    <header className={`w-full fixed z-50 bg-white max-h-[130px] shadow-md transition-transform duration-300 ${
       visible ? "transform translate-y-0" : "transform -translate-y-full"
     }`}>
-      <nav className="max-w-[1440px] mx-auto flex flex-col sm:flex-row justify-between items-center sm:px-4 px-6 py-4">
+      <nav className="max-w-[1440px] mx-auto flex flex-col sm:flex-row justify-between items-center sm:px-4 px-6 py-2">
         <div className="flex items-center sm:order-1 order-2">
           <Link href="/" className="flex justify-center items-center">
             <Image src="/Logo.svg" alt="Logo" width={100} height={50} />
@@ -100,7 +100,7 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
             </Link>
           )}
         </div>
-        <div className="flex-1 flex justify-start ml-0 sm:ml-10 items-center sm:order-2  order-3 mt-4 sm:mt-0">
+        <div className="flex-1 flex justify-start ml-0 sm:ml-10 items-center sm:order-2  order-3 mt-2 sm:mt-0">
           <Searchbar onSearch={handleSearch} onFilterClick={handleFilterClick} />
         </div>
       </nav>
