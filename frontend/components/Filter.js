@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 
 const Filter =({onApplyFilters}) =>{
     const [price, setPrice] = useState(3000000);
-    const [capacity, setCapacity] = useState(6);
+    const [capacity, setCapacity] = useState(null);
     const [type, setType] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
     const [cities, setCities] = useState([]); // State to store the list of cities
@@ -58,7 +58,14 @@ const Filter =({onApplyFilters}) =>{
         console.log("Applying filters:", { price, capacity, type ,selectedCity});
         onApplyFilters(price,capacity,type,selectedCity);
     };
-    const handleClearFilters = () => {}
+    const handleClearFilters = () => {
+        setCapacity(null);
+        setPrice(3000000);
+        setSelectedCity('');
+        setType('');
+        onApplyFilters(3000000, '', '', '');
+
+    };
     
     return (
         <div className="w-full mx-auto bg-slate-50 py-8 px-4 sm:px-10 shadow-md">
