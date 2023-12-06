@@ -58,10 +58,11 @@ const Filter =({onApplyFilters}) =>{
         console.log("Applying filters:", { price, capacity, type ,selectedCity});
         onApplyFilters(price,capacity,type,selectedCity);
     };
+    const handleClearFilters = () => {}
     
     return (
         <div className="w-full mx-auto bg-slate-50 py-8 px-4 sm:px-10 shadow-md">
-            <div className="container mx-auto grid sm:grid-cols-2 gap-2">
+            <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div className="text-sm font-semibold opacity-70">
                     <label>CITY</label>
                 </div>
@@ -75,50 +76,54 @@ const Filter =({onApplyFilters}) =>{
                         ))}
                     </select>
                 </div>
-                <div className="text-sm font-semibold opacity-70">
-                    <label>CAPACITIES</label>
+                <div className="col-span-2 sm:col-span-1">
+                    <div className="text-sm font-semibold opacity-70">
+                        <label>CAPACITIES</label>
+                    </div>
+                    <div className="sm:flex sm:items-center space-x-4">
+                        <input
+                            type="checkbox"
+                            id="2"
+                            checked={capacity === 2}
+                            onChange={handleCapacityChange}
+                        />
+                        <label htmlFor="2">{window.innerWidth <= 640 ? "2" : "2 Person"}</label>
+                        <input
+                            type="checkbox"
+                            id="4"
+                            checked={capacity === 4}
+                            onChange={handleCapacityChange}
+                        />
+                        <label htmlFor="4">{window.innerWidth <= 640 ? "4" : "4 Person"}</label>
+                        <input
+                            type="checkbox"
+                            id="6"
+                            checked={capacity === 6}
+                            onChange={handleCapacityChange}
+                        />
+                        <label htmlFor="6">{window.innerWidth <= 640 ? "6" : "6 Person"}</label>
+                        <input
+                            type="checkbox"
+                            id="8"
+                            checked={capacity === 8}
+                            onChange={handleCapacityChange}
+                        />
+                        <label htmlFor="8">{window.innerWidth <= 640 ? "8" : "8 Person"}</label>
+                    </div>
                 </div>
-                <div className="text-sm font-semibold opacity-70">
-                    <label>TYPE</label>
+                {/* Add a line break for small screens */}
+                <div className="col-span-1">
+                    <div className="col-span-2 text-sm font-semibold opacity-70">
+                        <label>TYPE</label>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <input type="checkbox" id="Auto" checked={type === "Auto"} onChange={handleTypeChange} />
+                        <label htmlFor="automatic">Automatic</label>
+                        <input type="checkbox" id="Manual" checked={type === "Manual"} onChange={handleTypeChange} />
+                        <label htmlFor="manual">Manual</label>
+                    </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                    <input
-                        type="checkbox"
-                        id="2"
-                        checked={capacity === 2}
-                        onChange={handleCapacityChange}
-                    />
-                    <label htmlFor="2">2 Person</label>
-                    <input
-                        type="checkbox"
-                        id="4"
-                        checked={capacity === 4}
-                        onChange={handleCapacityChange}
-                    />
-                    <label htmlFor="4">4 Person</label>
-                    <input
-                        type="checkbox"
-                        id="6"
-                        checked={capacity === 6}
-                        onChange={handleCapacityChange}
-                    />
-                    <label htmlFor="6">6 Person</label>
-                    <input
-                        type="checkbox"
-                        id="8"
-                        checked={capacity === 8}
-                        onChange={handleCapacityChange}
-                    />
-                    <label htmlFor="8">8 Person</label>
-                </div>
-                <div className="flex items-center space-x-4 ">
-                    <input type="checkbox" id="Auto" checked={type === "Auto"}
-                        onChange={handleTypeChange} />
-                    <label htmlFor="automatic">Automatic</label>
-                    <input type="checkbox" id="Manual" checked={type === "Manual"}
-                        onChange={handleTypeChange}/>
-                    <label htmlFor="manual">Manual</label>
-                </div>
+                    
                 <div className="col-span-2 text-sm font-semibold opacity-70">
                     <label>MAX PRICE</label>
                 </div>
@@ -138,12 +143,14 @@ const Filter =({onApplyFilters}) =>{
                     <label>Rp {price}</label>
                 </div>
                 <div className="text-right mr-5">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleApplyFilters}>
-                    Apply Filter
+                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleClearFilters}>
+                        Clear Filter
+                    </button>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2" onClick={handleApplyFilters}>
+                        Apply Filter
                     </button>
                 </div>
             </div>
-            
         </div>
     )
 };
