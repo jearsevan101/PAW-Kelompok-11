@@ -66,7 +66,7 @@ const Profile = (logOut) => {
               {isLoginAsAdmin ? (
                 <Link href={`/admin/dashboard`}>
                   <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                    Admin Dashboard
+                    Dashboard
                   </div>
                 </Link>
               ) : (
@@ -79,18 +79,18 @@ const Profile = (logOut) => {
             </li>
             <li>
               {isLoginAsAdmin ? (
-                <Link href={`/admin/list-car`}>
+                <Link href={`/admin/add-car`}>
                   <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                    List Car
+                    Add Car
                   </div>
                 </Link>
               ) : null}
             </li>
             <li>
               {isLoginAsAdmin ? (
-                <Link href={`/order-list`}>
+                <Link href={`/admin/list-car`}>
                   <div className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                    Order List
+                    List Car
                   </div>
                 </Link>
               ) : null}

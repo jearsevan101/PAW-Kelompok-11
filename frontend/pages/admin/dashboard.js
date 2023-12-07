@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [price, setPrice] = useState(3000000);
   const [capacity, setCapacity] = useState(null);
   const [type, setType] = useState("");
+  const [showAll, setShowAll] = useState(false);
 
   const bearerToken = Cookies.get("auth_info");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -174,24 +175,37 @@ export default function Dashboard() {
           customer: matchingCustomer || {},
         };
       });
-      
-      const validMerged = merged.filter((sewa) => sewa.kendaraan._id !== undefined);
-      const invalidSewaIds = merged.filter((sewa) => sewa.kendaraan._id === undefined).map((sewa) => sewa._id);
-  
+
+      const validMerged = merged.filter(
+        (sewa) => sewa.kendaraan._id !== undefined
+      );
+      const invalidSewaIds = merged
+        .filter((sewa) => sewa.kendaraan._id === undefined)
+        .map((sewa) => sewa._id);
+
       invalidSewaIds.forEach(async (id) => {
         try {
-          await useAxios(`https://paw-kelompok-11-server.vercel.app/api/sewa/${id}`, 'DELETE', null, true);
+          await useAxios(
+            `https://paw-kelompok-11-server.vercel.app/api/sewa/${id}`,
+            "DELETE",
+            null,
+            true
+          );
         } catch (error) {
           console.error(`Error deleting sewa with id ${id}:`, error);
         }
       });
-  
+
       setMergedData(validMerged);
       if (selectedData === null && validMerged.length > 0) {
         setSelectedData(validMerged[0]);
       }
     }
   }, [sewaList, kendaraanList, customerList, selectedData]);
+
+  const sortedData = [...mergedData].sort(
+    (a, b) => new Date(b.tanggal_sewa) - new Date(a.tanggal_sewa)
+  );
 
   return (
     <>
@@ -219,8 +233,7 @@ export default function Dashboard() {
                         height: "75px",
                         position: "relative",
                         marginRight: "20px",
-                      }}
-                    >
+                      }}>
                       <Image
                         src={selectedData.kendaraan.img_url[0]}
                         alt={selectedData.kendaraan.nama}
@@ -255,8 +268,7 @@ export default function Dashboard() {
                       display: "flex",
                       alignItems: "center",
                       marginTop: "10px",
-                    }}
-                  >
+                    }}>
                     <img
                       src="/Calendar.png"
                       alt="Date Icon"
@@ -264,8 +276,7 @@ export default function Dashboard() {
                     />
                     <div
                       className="font-semibold text-[16px]"
-                      style={{ marginRight: "10px" }}
-                    >
+                      style={{ marginRight: "10px" }}>
                       {" "}
                       Pick-Up
                     </div>
@@ -284,8 +295,7 @@ export default function Dashboard() {
                       display: "flex",
                       alignItems: "center",
                       marginTop: "20px",
-                    }}
-                  >
+                    }}>
                     <img
                       src="/Calendar.png"
                       alt="Date Icon"
@@ -293,8 +303,7 @@ export default function Dashboard() {
                     />
                     <div
                       className="font-semibold text-[16px]"
-                      style={{ marginRight: "10px" }}
-                    >
+                      style={{ marginRight: "10px" }}>
                       {" "}
                       Drop-Off
                     </div>
@@ -317,8 +326,7 @@ export default function Dashboard() {
                       textAlign: "right",
                       marginTop: "10px",
                       marginBottom: "40px",
-                    }}
-                  >
+                    }}>
                     Rp{selectedData.total_harga.toLocaleString("id-ID")}
                   </p>
                   <div className style={{ textAlign: "right" }}>
@@ -357,36 +365,45 @@ export default function Dashboard() {
                         border: "none",
                         borderRadius: "4px",
                         cursor: "pointer",
-                      }}
-                    >
+                      }}>
                       <option
                         value="DIAJUKAN"
-                        style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
-                      >
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          color: "#000000",
+                        }}>
                         DIAJUKAN
                       </option>
                       <option
                         value="KONFIRMASI"
-                        style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
-                      >
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          color: "#000000",
+                        }}>
                         KONFIRMASI
                       </option>
                       <option
                         value="DISEWA"
-                        style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
-                      >
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          color: "#000000",
+                        }}>
                         DISEWA
                       </option>
                       <option
                         value="DITOLAK"
-                        style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
-                      >
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          color: "#000000",
+                        }}>
                         DITOLAK
                       </option>
                       <option
                         value="KEMBALI"
-                        style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
-                      >
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          color: "#000000",
+                        }}>
                         KEMBALI
                       </option>
                     </select>
@@ -401,13 +418,12 @@ export default function Dashboard() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-              }}
-            >
+              }}>
               <h2 className="font-bold text-c-text-dark text-xl">
                 Recent Transaction
               </h2>
-              <Link href="/order-list">
                 <button
+                  onClick={() => setShowAll(true)}
                   style={{
                     fontSize: "12px",
                     letterSpacing: "0.02em",
@@ -418,13 +434,11 @@ export default function Dashboard() {
                     border: "none",
                     borderRadius: "4px",
                     cursor: "pointer",
-                  }}
-                >
+                  }}>
                   View All
                 </button>
-              </Link>
             </div>
-            {mergedData.slice(0, 5).map((data) => (
+            {sortedData.slice(0, showAll ? sortedData.length : 5).map((data) => (
               <div
                 key={data._id}
                 style={{
@@ -432,19 +446,17 @@ export default function Dashboard() {
                   alignItems: "center",
                   marginBottom: "40px",
                   marginTop: "40px",
-                }}
-              >
+                }}>
                 {data.kendaraan.img_url && (
                   <div
-                  onClick={() => setSelectedData(data)}
+                    onClick={() => setSelectedData(data)}
                     style={{
                       width: "150px",
                       height: "75px",
                       position: "relative",
                       marginRight: "20px",
                       cursor: "pointer",
-                    }}
-                  >
+                    }}>
                     <Image
                       src={data.kendaraan.img_url[0]}
                       alt={data.kendaraan.nama}
@@ -458,8 +470,7 @@ export default function Dashboard() {
                     display: "flex",
                     justifyContent: "space-between",
                     width: "100%",
-                  }}
-                >
+                  }}>
                   <div>
                     <p className="font-bold text-c-text-dark tracking-wide mb-[6px]">
                       {data.kendaraan.nama}
@@ -495,8 +506,7 @@ export default function Dashboard() {
                         border: "none",
                         borderRadius: "4px",
                         cursor: "pointer",
-                      }}
-                    >
+                      }}>
                       {isUpdating && data._id === selectedData._id
                         ? "Updating status..."
                         : data.status}
