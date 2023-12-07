@@ -65,12 +65,12 @@ export default function EditProfile() {
       );
 
       if (response) {
-        onSuccess("Profile updated successfully");
+        alert("Profile updated successfully");
       } else {
-        onError("Profile update failed");
+        alert("Profile update failed");
       }
     } catch (error) {
-      onError(`Profile update failed\n\nerror: ${error.message}`);
+      alert(`Profile update failed\n\nerror: ${error.message}`);
     }
   };
 

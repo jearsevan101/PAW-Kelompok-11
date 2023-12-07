@@ -43,12 +43,12 @@ export default function ChangePassword() {
       );
 
       if (response) {
-        onSuccess("Password changed successfully");
+        alert("Password changed successfully");
       } else {
-        onError("Failed to change password");
+        alert("Failed to change password");
       }
     } catch (error) {
-      onError(`Failed to change password\n\nerror: ${error.message}`);
+      alert(`Failed to change password\n\nerror: ${error.message}`);
     }
   };
 
