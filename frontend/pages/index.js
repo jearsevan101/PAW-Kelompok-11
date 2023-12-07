@@ -11,7 +11,6 @@ import Profile from "@/components/Profile";
 import { useRouter } from "next/router";
 
 export default function Home() {
-  // const [kendaraanList, setKendaraanList] = useState([]);
   const [loading, setLoading] = useState(true); 
   const [kendaraanListSearch, setkendaraanListSearch] = useState([]);
   const [name, setName] = useState('');
@@ -33,7 +32,6 @@ export default function Home() {
       setType(typeF);
     }
     const apiUrl = `https://paw-kelompok-11-server.vercel.app/api/kendaraan?search=${name || ''}&sort=asc&hargaBelow=${price|| ''}&capacity=${capacity|| ''}&type=${type|| ''}&kota=${selectedCity|| ''}`;
-    console.log("API URL:", apiUrl);
     axios
       .get(apiUrl)
       .then((response) => {

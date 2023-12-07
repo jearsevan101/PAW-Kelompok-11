@@ -18,7 +18,7 @@ export default function AddCar() {
   const [img_url, setImg_url] = useState(["", "", ""]);
   const [capacity, setCapacity] = useState("");
   const [type, setType] = useState("Manual");
-  // const [jumlah_tersewa, setJumlah_tersewa] = useState(0)
+
   const [fuel_capacity, setFuel_capacity] = useState("");
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -38,7 +38,6 @@ export default function AddCar() {
     createCar();
   };
 
-  console.log(img_url);
 
   function createCar() {
     axios

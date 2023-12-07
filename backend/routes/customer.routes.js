@@ -12,8 +12,10 @@ router.delete("/:id", deleteCustomer);
 //PUT API - update customer by ID
 router.put("/:id", updateCustomerById);
 
-// GET API
+// GET API - get all customer 
 router.get("/", readAllCustomer);
+
+// GET API - get customer by ID
 router.get("/:id", readCustomerById);
 
 module.exports = router;

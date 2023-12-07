@@ -15,8 +15,10 @@ router.put("/:id", updateSewaById);
 //PUT API - update status customer by ID
 router.put("/status/:id", updateStatusById);
 
-// GET API - Read all sewa
+// GET API - Get all sewa
 router.get("/", readAllSewa);
+
+// GET API - Get sorted sewa
 router.get("/sort", readSortedSewa);
 
 // GET API - Read sewa by ID
@@ -24,4 +26,5 @@ router.get("/:id", readSewaById);
 
 //Get API - get sewa by customer id
 router.get("/customer/:customer_id", readSewaByCustomerId);
+
 module.exports = router;

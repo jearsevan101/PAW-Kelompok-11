@@ -42,7 +42,6 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
     } else {
       onSearchSend(query);
     }
-    console.log("Searching for:", query);
   };
 
   const handleFilterClick = () => {
@@ -64,8 +63,9 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
           typeF: type,
         },
       });
+    }else {
+      onFilterSend(price, capacity, type, selectedCity);
     }
-    onFilterSend(price, capacity, type, selectedCity);
   };
 
   const handleScroll = () => {

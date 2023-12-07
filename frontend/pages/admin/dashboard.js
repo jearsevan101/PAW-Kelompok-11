@@ -76,9 +76,6 @@ export default function Dashboard() {
     setPrice(price);
     setType(type);
     setSelectedCity(selectedCity);
-    console.log("handleFilterChange price", price);
-    console.log("handleFilterChange capacity", capacity);
-    console.log("handleFilterChange type", type);
   };
 
   const handleStatusChange = (event, id) => {

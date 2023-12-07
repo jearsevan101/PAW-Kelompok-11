@@ -27,8 +27,6 @@ const CarCard = ({ data, isAdmin }) => {
   const handleEdit = () => {
     const kendaraanId = data._id
     router.push(`/admin/${kendaraanId}`)
-    // Implement your logic for editing the car
-    console.log("Edit Car:", data);
   };
 
   const handleDelete = () => {
@@ -43,8 +41,6 @@ const CarCard = ({ data, isAdmin }) => {
         alert(error)
         console.error("Error fetching data:", error);
       });
-    // Implement your logic for deleting the car
-    console.log("Delete Car:", data);
   };
 
   return (

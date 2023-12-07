@@ -8,13 +8,12 @@ const Filter =({onApplyFilters}) =>{
     const [capacity, setCapacity] = useState(null);
     const [type, setType] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
-    const [cities, setCities] = useState([]); // State to store the list of cities
+    const [cities, setCities] = useState([]); 
 
     useEffect(() => {
         // Fetch cities from the backend when the component mounts
         const fetchCities = async () => {
         try {
-            // Replace this URL with the correct URL to fetch cities from your backend
             const response = await fetch('https://paw-kelompok-11-server.vercel.app/api/kendaraan/kota');
             const data = await response.json();
             setCities(data.kota);
@@ -22,22 +21,18 @@ const Filter =({onApplyFilters}) =>{
             console.error('Error fetching cities:', error);
         }
         };
-
         fetchCities();
     }, []);
     const handlePriceChange = (event) =>{
         setPrice(event.target.value);
-        console.log("price change" + event.target.value)
     }
     const handleCityChange = (event) => {
         setSelectedCity(event.target.value);
-        console.log("Selected city:", event.target.value);
       };
     const handleTypeChange = (event) =>{
         const {id, checked} = event.target;
         if(checked){
             setType(id);
-            console.log("type change" + id)
         }else {
             setType();
         }
@@ -47,7 +42,6 @@ const Filter =({onApplyFilters}) =>{
         // Ensure only one checkbox is checked at a time
         if (checked) {
             setCapacity(parseInt(id, 10));
-            console.log("capacity change" + parseInt(id, 10))
         } else {
             // If unchecked, set capacity to 0
             setCapacity(0);
@@ -55,7 +49,6 @@ const Filter =({onApplyFilters}) =>{
     };
 
     const handleApplyFilters = () => {
-        console.log("Applying filters:", { price, capacity, type ,selectedCity});
         onApplyFilters(price,capacity,type,selectedCity);
     };
     const handleClearFilters = () => {
@@ -64,7 +57,6 @@ const Filter =({onApplyFilters}) =>{
         setSelectedCity('');
         setType('');
         onApplyFilters(3000000, '', '', '');
-
     };
     
     return (
