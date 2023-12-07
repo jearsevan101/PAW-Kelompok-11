@@ -18,7 +18,7 @@ function useNotifications() {
 
   const onSuccess = (message) => {
     toast.success(message, {
-      position: "top-right",
+      position: "bottom-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
