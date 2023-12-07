@@ -1,7 +1,7 @@
 <p align="center">
-  <h1>RentalIn</h1>
-  <h2>Kelompok 11</h2>
-  <p>RentalIn merupakan sebuah web application untuk perentalan mobil online</p>
+  <h1 align="center">RentalIn</h1>
+  <h2 align="center">Kelompok 11</h2>
+  <p align="center">RentalIn merupakan sebuah web application untuk perentalan mobil online</p>
 </p>
 
 ## Anggota Kelompok
