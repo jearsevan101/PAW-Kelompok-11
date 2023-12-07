@@ -59,7 +59,7 @@ export default function ChangePassword() {
         className="flex flex-col px-6 justify-center items-center min-h-screen"
         style={{ backgroundColor: "#F6F7F9" }}>
         <h1 className="text-4xl mb-4 font-bold">Change Password</h1>
-        <section className="mt-1 p-10 px-12 w-full lg:w-1/3 bg-white rounded-[12px] flex flex-col gap-2 justify-center items-center">
+        <section className="mt-1 z-10 p-10 px-12 w-full lg:w-1/3 bg-white rounded-[12px] flex flex-col gap-2 justify-center items-center">
           <form
             className="flex flex-col w-full"
             onSubmit={handleChangePassword}>

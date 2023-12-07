@@ -49,7 +49,7 @@ export default function Login() {
         className="flex flex-col justify-center items-center px-6 min-h-screen"
         style={{ backgroundColor: "#F6F7F9" }}>
         <h1 className="text-4xl mb-4 font-bold">Login</h1>
-        <section className="mt-4 p-10 w-full lg:w-1/3 px-12 bg-white rounded-[12px] flex flex-col gap-4 justify-center items-center">
+        <section className="mt-4 z-20 p-10 w-full lg:w-1/3 px-12 bg-white rounded-[12px] flex flex-col gap-4 justify-center items-center">
           <form className="flex flex-col w-full gap-2" onSubmit={handleLogin}>
             <ReusableForm
               label="Username"

@@ -82,7 +82,7 @@ export default function EditProfile() {
         style={{ backgroundColor: "#F6F7F9" }}>
         <h1 className="text-4xl mb-4 font-bold">Edit Profile</h1>
         <section className="mt-1 p-10 px-12 w-full lg:w-1/3 bg-white rounded-[12px] flex flex-col gap-2 justify-center items-center">
-          <form className="flex flex-col w-full" onSubmit={handleUpdateProfile}>
+          <form className="flex flex-col z-10 w-full" onSubmit={handleUpdateProfile}>
             <ReusableForm
               label="Username"
               type="text"
