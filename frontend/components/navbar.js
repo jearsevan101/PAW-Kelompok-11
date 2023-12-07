@@ -29,17 +29,17 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
   useEffect(() => {
     if (router.pathname !== "/") {
       setOnMainPages(false);
-    }else {
+    } else {
       setOnMainPages(true);
     }
   }, [router.pathname]);
   const handleSearch = (query) => {
-    if(!onMainPages){
+    if (!onMainPages) {
       router.push({
-        pathname: '/',
-        query: { nameF: query }
-      })
-    }else {
+        pathname: "/",
+        query: { nameF: query },
+      });
+    } else {
       onSearchSend(query);
     }
     console.log("Searching for:", query);
@@ -55,20 +55,24 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
       { price, capacity, type, selectedCity },
       jwtDecode(Cookies.get("auth_info"))
     );
-    if(!onMainPages){
+    if (!onMainPages) {
       router.push({
-        pathname: '/',
-        query: { slc_city: selectedCity, priceF: price, capacityF : capacity, typeF: type }
-    })}
+        pathname: "/",
+        query: {
+          slc_city: selectedCity,
+          priceF: price,
+          capacityF: capacity,
+          typeF: type,
+        },
+      });
+    }
     onFilterSend(price, capacity, type, selectedCity);
   };
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
 
-    setVisible(
-      currentScrollPos <= 0 || currentScrollPos < prevScrollPos
-    );
+    setVisible(currentScrollPos <= 0 || currentScrollPos < prevScrollPos);
 
     setPrevScrollPos(currentScrollPos);
   };
@@ -82,26 +86,39 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
   }, [prevScrollPos, visible]);
 
   return (
-    <header className={`w-full fixed z-50 bg-white max-h-[130px] shadow-md transition-transform duration-300 ${
-      visible ? "transform translate-y-0" : "transform -translate-y-full"
-    }`}>
-      <nav className="max-w-[1440px] mx-auto flex flex-col sm:flex-row justify-between items-center sm:px-4 px-6 py-2">
-        <div className="flex items-center sm:order-1 order-2">
-          <Link href="/" className="flex justify-center items-center">
-            <Image src="/Logo.svg" alt="Logo" width={100} height={50} />
-          </Link>
-        </div>
-        <div className="flex items-center sm:order-3 order-1">
-          {userLogin ? (
-            <Profile logOut={() => setUserLogin(false)} />
-          ) : (
-            <Link href={`/auth/login`}>
-              <Button>Login</Button>
+    <header
+      className={`w-full fixed z-50 bg-white max-h-[130px] shadow-md transition-transform duration-300 ${
+        visible ? "transform translate-y-0" : "transform -translate-y-full"
+      }`}>
+      <nav className="max-w-[1440px] mx-auto sm:px-4 px-8 py-2">
+        <div className="flex flex-row sm:flex-row justify-between items-center ">
+          <div className="flex items-center order-1">
+            <Link href="/" className="flex justify-center items-center">
+              <Image src="/Logo.svg" alt="Logo" width={100} height={50} />
             </Link>
-          )}
+          </div>
+          <div className="flex items-center sm:order-3 order-2">
+            {userLogin ? (
+              <Profile logOut={() => setUserLogin(false)} />
+            ) : (
+              <Link href={`/auth/login`}>
+                <Button>Login</Button>
+              </Link>
+            )}
+          </div>
+          <div className=" hidden flex-1 sm:flex justify-start ml-0 sm:ml-10 items-center sm:order-2  order-3 mt-2 sm:mt-0">
+            <Searchbar
+              onSearch={handleSearch}
+              onFilterClick={handleFilterClick}
+            />
+          </div>
         </div>
-        <div className="flex-1 flex justify-start ml-0 sm:ml-10 items-center sm:order-2  order-3 mt-2 sm:mt-0">
-          <Searchbar onSearch={handleSearch} onFilterClick={handleFilterClick} />
+
+        <div className="block sm:hidden my-2">
+          <Searchbar
+            onSearch={handleSearch}
+            onFilterClick={handleFilterClick}
+          />
         </div>
       </nav>
       {isFilterVisible && <Filter onApplyFilters={handleApplyFilters} />}
