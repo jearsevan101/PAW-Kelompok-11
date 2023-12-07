@@ -84,7 +84,7 @@ export default function AddCar() {
     <>
       <Navbar />
       {isAdmin ? (
-        <main className="min-h-screen pt-20 bg-[#F6F7F9] flex flex-col md:flex-row justify-between">
+        <main className="min-h-screen pt-14 bg-[#F6F7F9] flex flex-col md:flex-row justify-between">
           <div className="md:w-64 w-full">
             <SideBar />
           </div>
