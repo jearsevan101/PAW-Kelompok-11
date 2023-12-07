@@ -78,5 +78,5 @@ username : admin
 
 [Video Backend Presentation](https://www.youtube.com/watch?v=I5A9CiaZYfM&feature=youtu.be)
 
-[Video Final Presentation]()
+[Video Final Presentation](https://youtu.be/kUSqrl1UiSI)
 
