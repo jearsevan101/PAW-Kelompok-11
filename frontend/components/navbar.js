@@ -53,7 +53,6 @@ const Navbar = ({ onSearchSend, onFilterSend }) => {
     console.log(
       "Filters applied in Navbar:",
       { price, capacity, type, selectedCity },
-      jwtDecode(Cookies.get("auth_info"))
     );
     if (!onMainPages) {
       router.push({
