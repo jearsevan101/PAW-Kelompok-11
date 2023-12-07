@@ -22,7 +22,14 @@ https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
   ```bash
      https://github.com/jearsevan101/PAW-Kelompok-11.git
    ```
-
+## How to Login as Admin
+```bash
+username : admin
+ ```
+ 
+ ```bash
+ password : admin
+ ```
 ## Backend
 
 Go to the server project directory
