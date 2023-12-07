@@ -1,127 +1,21 @@
-# PAW-Kelompok-11
-Tugas Pengembangan Aplikasi Web
+<p align="center">
+  <h1>RentalIn</h1>
+  <h2>Kelompok 11</h2>
+  <p>RentalIn merupakan sebuah web application untuk perentalan mobil online</p>
+</p>
+
+## Anggota Kelompok
+|No   |   Nama     |   NIM     |
+|----|------------|-----------|
+|1. | Afix Vega Praditya            | 21/477810/TK/52629 |
+|2. | Moh Rizky Arif                | 21/478613/TK/52741 |
+|3. | Putra Agung A.M. Sitorus      | 21/474928/TK/52423 |
+|4. | Julius Evan Adipramana R.S    | 21/482618/TK/53326 |
+|5. | Diandra Nabila Putri Nugroho  | 21/473599/TK/52202 |
 
 ## Dokumentasi API Postman
 https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
 
-## Dokumentasi Endpoint
-### Customer
-1.  Get all customers <br>
-    Mendapatkan semua customer yang ada di database <br>
-    Endpoint: <br>
-    ```
-    GET /api/customer
-    ```
-2.  Get Customer By Id <br>
-    Mendapatkan customer sesuai dengan id yang diberikan <br>
-    Endpoint: <br>
-    ```
-    GET /api/customer/:id
-    ```
-3.  Create new Customer <br>
-    Membuat customer baru <br>
-    Endpoint: <br>
-    ```
-    POST /api/customer
-    ```
-4.  Delete existing customer <br>
-    Menghapus customer yang ada di database berdasarkan Id <br>
-    Endpoint: <br>
-    ```
-    DELETE /api/customer/:id
-    ```
-5.  Update Customer by Id <br>
-    Merubah data customer berdasarkan Id <br>
-    Endpoint: <br>
-    ```
-    PUT /api/customer/:id
-    ```
-### Kendaraan
-1.  Get all Kendaraan <br>
-    Mendapatkan semua kendaraan yang ada di database <br>
-    Endpoint: <br>
-    ```
-    GET /api/kendaraan
-    ```
-2.  Get Kendaraan By Id <br>
-    Mendapatkan kendaraan sesuai dengan id yang diberikan <br>
-    Endpoint: <br>
-    ```
-    GET /api/kendaraan/:id
-    ```
-3.  Create new Kendaraan <br>
-    Membuat data kendaraan baru <br>
-    Endpoint: <br>
-    ```
-    POST /api/kendaraan
-    ```
-4.  Delete existing Kendaraan <br>
-    Menghapus kendaraan yang ada di database berdasarkan Id <br>
-    Endpoint: <br>
-    ```
-    DELETE /api/kendaraan/:id
-    ```
-5.  Update Kendaraan by Id <br>
-    Merubah data customer berdasarkan Id <br>
-    Endpoint: <br>
-    ```
-    PUT /api/kendaraan/:id
-    ```
-6. Sort Kendaraan by Harga <br>
-   Menampilkan semua kendaraan dan mengurutkannya berdasarkan harga secara asc (naik) atau desc (menurun)
-   ```
-   GET /api/kendaraan?sort=asc
-   ```
-### Sewa
-1.  Get all Sewa <br>
-    Mendapatkan semua data Sewa yang ada di database <br>
-    Endpoint: <br>
-    ```
-    GET /api/sewa
-    ```
-2.  Get Sewa By Id <br>
-    Mendapatkan data sewa sesuai dengan id yang diberikan <br>
-    Endpoint: <br>
-    ```
-    GET /api/sewa/:id
-    ```
-3.  Create new Sewa <br>
-    Membuat data sewa baru <br>
-    Endpoint: <br>
-    ```
-    POST /api/sewa
-    ```
-4.  Delete existing Sewa <br>
-    Menghapus sewa yang ada di database berdasarkan Id <br>
-    Endpoint: <br>
-    ```
-    DELETE /api/sewa/:id
-    ```
-5.  Update sewa by Id <br>
-    Merubah data sewa berdasarkan Id <br>
-    Endpoint: <br>
-    ```
-    PUT /api/sewa/:id
-    ```
-6.  Update Status sewa by Id <br>
-    Merubah data status sewa pada Sewa dan Customer berdasarkan Id <br>
-    Endpoint: <br>
-    ```
-    PUT /api/sewa/status/:id
-    ```
-7.  get sorted sewa by params <br>
-    Mendapatkan semua sewa dalam keadaan sorted <br>
-    params: field, value: field yang ingin di sort <br>
-    contoh request sort by status: GET /api/sewa/sort?field=status <br>
-    ```
-    GET /api/sewa/sort
-    ```
-8.  Get Sewa by CustomerID
-    Mendapatkan sewa berdasarkan user CustomerID <br>
-    Endpoint: <br>
-    ```
-    GET /api/sewa/customer/:customer_id
-    ```
 ## How to Run this Project in Local
 - [Download](https://nodejs.org/en/download/) and install **Node.js** version `16.15` or higher.
 - Clone this project on your computer.
@@ -129,7 +23,7 @@ https://documenter.getpostman.com/view/29937118/2s9YJZ2iyv#intro
      https://github.com/jearsevan101/PAW-Kelompok-11.git
    ```
 
-### Backend
+## Backend
 
 Go to the server project directory
 
@@ -149,7 +43,7 @@ Start the server
   npm run dev
 ```
 
-### Frontend
+## Frontend
 
 Go to the server project directory
 
@@ -168,3 +62,5 @@ Start the server
 ```bash
   npm run dev
 ```
+## Documentation
+[Final Presentation](https://www.canva.com/design/DAFzrSAesUQ/SpAMGDkttxzVowIsyLfiLw/edit?utm_content=DAFzrSAesUQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
